@@ -1,33 +1,28 @@
 import { initTRPC } from "@trpc/server";
-import { observable, Observer } from "@trpc/server/observable";
-import EventEmitter from "events";
+import { observable } from "@trpc/server/observable";
 import { z } from "zod";
+import { GameState } from "../types/GameState";
 
-const emitter = new EventEmitter();
 const client = initTRPC.create();
 
-let stateObservers: Observer<unknown, unknown>[] = [];
+let stateObservers: { next: (state: GameState) => void }[] = [];
 
 export const gameRouter = client.router({
   ping: client.procedure.query(() => {}),
   state: client.procedure.subscription(() => {
-    return observable((observer) => {
+    return observable<GameState>((observer) => {
       stateObservers.push(observer);
-
-      const ping = () => observer.next("ping");
-      emitter.on("ping", ping);
       return () => {
         stateObservers.splice(
           stateObservers.findIndex((o) => o == observer),
           1
         );
-        emitter.off("ping", ping);
       };
     });
   }),
   set: client.procedure
     .input(z.string())
-    .query(({ input }) =>
+    .query(({ input }: { input: GameState }) =>
       stateObservers.forEach((observer) => observer.next(input))
     ),
 });

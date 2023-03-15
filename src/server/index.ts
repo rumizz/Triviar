@@ -1,16 +1,16 @@
-import express from "express";
-import cors from "cors";
-import { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
 import {
   CreateExpressContextOptions,
   createExpressMiddleware,
 } from "@trpc/server/adapters/express";
+import { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
+import cors from "cors";
+import express from "express";
 
+import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import * as dotenv from "dotenv";
 import path from "path";
-import { router } from "./router/router";
-import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import ws from "ws";
+import { router } from "./router/router";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../.env"),
@@ -36,7 +36,7 @@ app.listen(process.env.API_PORT, () => {
 });
 
 const wss = new ws.Server({
-  port: parseInt(process.env.WEBSOCKET_PORT),
+  port: parseInt(process.env.WEBSOCKET_PORT || "0"),
 });
 const handler = applyWSSHandler({ wss, router, createContext });
 
