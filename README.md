@@ -5,7 +5,6 @@
 `client`:
 
 - `create-react-app`
-- has its own `node_modules`
 
 `server`:
 
