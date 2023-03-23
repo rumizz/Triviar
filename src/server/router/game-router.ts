@@ -1,28 +1,44 @@
-import { initTRPC } from "@trpc/server";
-import { observable } from "@trpc/server/observable";
 import { z } from "zod";
-import { GameState } from "../types/GameState";
+import { client, Context } from "./context";
+import { answer, join, leave, setName, setPhase } from "../service/Game";
+import { observable } from "@trpc/server/observable";
+import { GameState } from "../types/Game";
+import { TRPCError } from "@trpc/server";
+import { Phase } from "../types/Phase";
 
-const client = initTRPC.create();
-
-let stateObservers: { next: (state: GameState) => void }[] = [];
+function createQuery<T>(method: (ctx: Context, input: T) => void) {
+  return ({ input, ctx }: { input: T; ctx: Context }) => {
+    if (!ctx.game) {
+      return {
+        error: "Game not found",
+      };
+    } else {
+      method(ctx, input);
+    }
+  };
+}
 
 export const gameRouter = client.router({
-  ping: client.procedure.query(() => {}),
-  state: client.procedure.subscription(() => {
-    return observable<GameState>((observer) => {
-      stateObservers.push(observer);
-      return () => {
-        stateObservers.splice(
-          stateObservers.findIndex((o) => o == observer),
-          1
-        );
-      };
-    });
-  }),
-  set: client.procedure
+  join: client.procedure.input(z.number()).query(createQuery<number>(join)),
+  leave: client.procedure.query(createQuery(leave)),
+
+  setName: client.procedure
     .input(z.string())
-    .query(({ input }: { input: GameState }) =>
-      stateObservers.forEach((observer) => observer.next(input))
-    ),
+    .query(createQuery<string>(setName)),
+
+  answer: client.procedure
+    .input(z.number().min(0).max(3))
+    .query(createQuery<number>(answer)),
+
+  state: client.procedure.subscription(({ ctx }: { ctx: Context }) => {
+    if (!ctx.game) {
+      return new TRPCError({ code: "NOT_FOUND" });
+    }
+    let game = ctx.game;
+    return observable<GameState>(game.state.toTRPC());
+  }),
+
+  setPhase: client.procedure
+    .input(z.enum(["", ...Object.keys(Phase)]))
+    .query(createQuery<Phase>(setPhase)),
 });

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .flag {
+    clip-path: polygon(.5rem .5rem, 100% 0, calc(100% - .5rem) calc(100% - .2rem), 0 calc(100%));
+  }
+}

@@ -1,4 +1,4 @@
-export const GameState = {
+export const Phase = {
   lobby: "lobby",
   question: "question",
   answer: "answer",
@@ -6,4 +6,4 @@ export const GameState = {
   podium: "podium",
 };
 
-export type GameState = (typeof GameState)[keyof typeof GameState];
+export type Phase = (typeof Phase)[keyof typeof Phase];

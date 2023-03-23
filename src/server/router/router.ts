@@ -1,10 +1,7 @@
-import { initTRPC } from "@trpc/server";
+import { client } from "./context";
 import { gameRouter } from "./game-router";
 
-const client = initTRPC.create();
-
 export const router = client.router({
-  helloWorld: client.procedure.query(() => ({ quote: "Hello world!" })),
   game: gameRouter,
 });
 

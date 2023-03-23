@@ -9,6 +9,13 @@ import { AppRouter } from "src/server/router/router";
 
 export const proxyClient = createTRPCProxyClient<AppRouter>({
   links: [
+    /*
+    wsLink({
+      client: createWSClient({
+        url: `ws://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_WEBSOCKET_PORT}`,
+      }),
+    }),*/
+
     splitLink({
       condition(op) {
         return op.type === "subscription";
