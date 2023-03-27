@@ -7,6 +7,9 @@ export class Observable<T extends object> {
     this.value = value;
   }
   value: T;
+  get(): T {
+    return this.value;
+  }
   observers: Observer<T>[] = [];
   subscribe = (observer: Observer<T>) => {
     this.observers.push(observer);
@@ -20,6 +23,7 @@ export class Observable<T extends object> {
     let partialValue: Partial<T>;
     if (valueOrFunc instanceof Function) {
       partialValue = valueOrFunc(this.value);
+      console.log(partialValue);
     } else {
       partialValue = valueOrFunc;
     }

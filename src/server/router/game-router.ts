@@ -1,10 +1,15 @@
 import { z } from "zod";
 import { client, Context } from "./context";
-import { answer, join, leave, setName, setPhase } from "../service/Game";
 import { observable } from "@trpc/server/observable";
 import { GameState } from "../types/Game";
-import { TRPCError } from "@trpc/server";
 import { Phase } from "../types/Phase";
+import { PlayerState } from "../types/Player";
+import { answer } from "../service/game/answer";
+import { leave } from "../service/game/leave";
+import { join } from "../service/game/join";
+import { setName } from "../service/game/setName";
+import { setPhase } from "../service/game/setPhase";
+import { addPlayer } from "../service/game/addPlayer";
 
 function createQuery<T>(method: (ctx: Context, input: T) => void) {
   return ({ input, ctx }: { input: T; ctx: Context }) => {
@@ -26,16 +31,19 @@ export const gameRouter = client.router({
     .input(z.string())
     .query(createQuery<string>(setName)),
 
-  answer: client.procedure
-    .input(z.number().min(0).max(3))
-    .query(createQuery<number>(answer)),
+  answer: client.procedure.input(z.string()).query(createQuery<string>(answer)),
 
   state: client.procedure.subscription(({ ctx }: { ctx: Context }) => {
-    if (!ctx.game) {
-      return new TRPCError({ code: "NOT_FOUND" });
+    return observable<GameState>(ctx.game.state.toTRPC());
+  }),
+
+  playerState: client.procedure.subscription(({ ctx }: { ctx: Context }) => {
+    if (!ctx.game.players[ctx.user.id]) {
+      addPlayer(ctx);
     }
-    let game = ctx.game;
-    return observable<GameState>(game.state.toTRPC());
+    return observable<PlayerState>(
+      ctx.game.players[ctx.user.id].state.toTRPC()
+    );
   }),
 
   setPhase: client.procedure

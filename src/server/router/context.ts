@@ -6,17 +6,9 @@ export function createContext({
   req,
   res,
 }: CreateHTTPContextOptions | CreateWSSContextFnOptions) {
-  function getUserFromHeader() {
-    if (req.headers.authorization) {
-      return { id: req.headers.authorization };
-    }
-    return { id: "" };
-  }
-  const user = getUserFromHeader();
-  const game = runningGames[0];
   return {
-    user,
-    game, // mock
+    user: { id: req.socket.remoteAddress || "" },
+    game: runningGames[0], // mock
   };
 }
 export type Context = inferAsyncReturnType<typeof createContext>;

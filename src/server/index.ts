@@ -14,7 +14,7 @@ dotenv.config({
   path: path.resolve(__dirname, "../../.env"),
 });
 
-console.log("staring");
+console.log("starting");
 
 const app = express();
 app.use(cors());
