@@ -1,5 +1,6 @@
 import { Context } from "../../router/context";
 import { AnswerSymbol } from "../../types/AnswerOption";
+import findPlayer from "./findPlayer";
 import finishQuestion from "./finishQuestion";
 
 export function answer({ game, user }: Context, answerString: string) {
@@ -7,9 +8,10 @@ export function answer({ game, user }: Context, answerString: string) {
   if (!answer) {
     return;
   }
-  let prevAnswer = game.players[user.id].state.get().answer;
+  const player = findPlayer(game, user.id);
+  let prevAnswer = player.state.get().answer;
 
-  game.players[user.id].state.set({ answer });
+  player.state.set({ answer });
 
   if (!prevAnswer) {
     if (
@@ -17,7 +19,7 @@ export function answer({ game, user }: Context, answerString: string) {
       Object.keys(game.players).length - 1
     ) {
       clearTimeout(game.timeout);
-      setTimeout(() => finishQuestion(game), 1000);
+      setTimeout(() => finishQuestion({ game, user }), 1000);
     }
     game.state.set((prev) => ({
       answeredCount: prev.answeredCount + 1,

@@ -1,13 +1,34 @@
 import { AnswerSymbol } from "./AnswerOption";
 import { Observable } from "./Observable";
 
-export type Player = {
+export class Player {
+  id: string;
   state: Observable<PlayerState>;
-};
+  publicData(): PublicPlayerData {
+    return {
+      name: this.state.get().name,
+      score: this.state.get().score,
+    };
+  }
+  constructor(id: string) {
+    this.id = id;
+    this.state = new Observable<PlayerState>({
+      name: "",
+      score: 0,
+      answer: undefined,
+      isCorrect: undefined,
+    });
+  }
+}
 
 export type PlayerState = {
   name: string;
   score: number;
   answer?: AnswerSymbol;
   isCorrect?: boolean;
+};
+
+export type PublicPlayerData = {
+  name: string;
+  score: number;
 };

@@ -1,27 +1,16 @@
 import { Context } from "../../router/context";
-import { Observable } from "../../types/Observable";
-import { Player, PlayerState } from "../../types/Player";
+import { Player } from "../../types/Player";
+import findPlayer from "./findPlayer";
 
 export function addPlayer({ game, user }: Context) {
-  let newPlayer: Player = {
-    state: new Observable<PlayerState>({
-      name: "",
-      score: 0,
-      answer: undefined,
-      isCorrect: undefined,
-    }),
-  };
+  if (findPlayer(game, user.id)) {
+    return;
+  }
 
-  game.players[user.id] = newPlayer;
+  let newPlayer: Player = new Player(user.id);
+  game.players.push(newPlayer);
 
   game.state.set((prev) => ({
-    players: {
-      ...prev.players,
-      [user.id]: {
-        ...prev.players[user.id],
-        name: "",
-        score: 0,
-      },
-    },
+    players: [...prev.players, newPlayer.publicData()],
   }));
 }

@@ -1,52 +1,72 @@
+import { AnswerOption } from "../types/AnswerOption";
 import { Game, GameState } from "../types/Game";
 import { Observable } from "../types/Observable";
 import { Phase } from "../types/Phase";
+import { Question } from "../types/Question";
+import { Quiz } from "../types/Quiz";
 
-export const runningGames: Game[] = [
-  // mock
-  {
-    id: "1",
-    joinCode: 1234,
-    state: new Observable<GameState>({
-      answeredCount: 4,
-      phase: Phase.lobby,
-      expiryTimestamp: 0,
-      answerTexts: {
-        a: "Igen",
-        b: "Igen",
-        c: "Igen",
-        d: "Igen",
-      },
-      answerCorrects: {
-        a: true,
-        b: false,
-        c: false,
-        d: false,
-      },
-      question: "Lorem ipsum dolor sit amet",
-      players: {},
-    }),
-    quiz: {
-      title: "lorem",
-      questions: [],
+const mockAnswerOption: AnswerOption = {
+  text: "Lorem ipsum dolor sit amet",
+  correct: true,
+};
+
+const mockQuestion: Question = {
+  title: "Lorem ipsum dolor sit amet",
+  time: 10000,
+  options: [
+    mockAnswerOption,
+    mockAnswerOption,
+    mockAnswerOption,
+    mockAnswerOption,
+  ],
+};
+const mockQuiz: Quiz = {
+  title: "lorem",
+  questions: [mockQuestion, mockQuestion, mockQuestion, mockQuestion],
+};
+
+const mockGame: Game = {
+  id: "1",
+  joinCode: 1234,
+  questionIndex: 0,
+  state: new Observable<GameState>({
+    answeredCount: 4,
+    phase: Phase.lobby,
+    expiryTimestamp: 0,
+    answerTexts: {
+      a: "Lorem ipsum dolor sit amet",
+      b: "Lorem ipsum dolor sit amet",
+      c: "Lorem ipsum dolor sit amet",
+      d: "Lorem ipsum dolor sit amet",
     },
-    players: {},
-    answerOptions: {
-      a: {
-        text: "a",
-        correct: true,
-      },
-      b: {
-        text: "b",
-      },
-      c: {
-        text: "c",
-      },
-      d: {
-        text: "d",
-      },
+    answerCorrects: {
+      a: true,
+      b: false,
+      c: false,
+      d: false,
+    },
+    question: "Lorem ipsum dolor sit amet",
+    players: [],
+  }),
+  quiz: mockQuiz,
+  players: [],
+  answerOptions: {
+    a: {
+      text: "Lorem ipsum dolor sit amet",
+      correct: true,
+    },
+    b: {
+      text: "Lorem ipsum dolor sit amet",
+    },
+    c: {
+      text: "Lorem ipsum dolor sit amet",
+    },
+    d: {
+      text: "Lorem ipsum dolor sit amet",
     },
   },
-];
+};
+
+export const runningGames: Game[] = [mockGame];
 
 export const connections: { [id: string]: Game | undefined } = {};

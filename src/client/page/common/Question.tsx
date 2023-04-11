@@ -26,6 +26,7 @@ export default function QuestionPage({ view }: QuestionPageProps) {
 
   useEffect(() => {
     restart(new Date(expiryTimestamp));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiryTimestamp]);
 
   const submitAnswer = (id: string) => () => {
@@ -53,7 +54,9 @@ export default function QuestionPage({ view }: QuestionPageProps) {
           </div>
         )}
         <div className="absolute bottom-0 inset-x-0 flex flex-row p-6">
-          <p className="drop-shadow-md text-white text-2xl font-bold grow">{`${seconds}s`}</p>
+          <p className="drop-shadow-md text-white text-2xl font-bold grow">
+            {phase === Phase.question ? `${seconds}s` : "Time's up!"}
+          </p>
           <p className="drop-shadow-md text-white text-2xl font-bold">{`${answeredCount} / ${
             Object.values(players).length
           } answered`}</p>
