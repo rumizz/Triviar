@@ -1,8 +1,9 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { GameState } from "src/server/types/Game";
 import { Phase } from "src/server/types/Phase";
 import { usePlayerStore } from "../store/playerStore";
 import { proxyClient, token } from "./proxyClient";
+import { GameConnectionContext } from "./GameConnectionContext";
 
 export const GameStateContext = createContext<GameState>({} as GameState);
 
@@ -14,6 +15,7 @@ export default function GameStateContextProvider({
   const [state, setState] = useState<GameState>({} as GameState);
 
   const { clear } = usePlayerStore();
+  const { leave } = useContext(GameConnectionContext);
 
   useEffect(() => {
     if (state.phase === Phase.question) {
@@ -31,12 +33,15 @@ export default function GameStateContextProvider({
         setState((prev) => ({ ...prev, ...data }));
       },
       onError(err) {
-        console.error("error", err);
+        console.error("game state error", err);
+        console.warn("The game has probably ended");
+        leave();
       },
     });
     return () => {
       subscription.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <GameStateContext.Provider value={state}>

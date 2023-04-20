@@ -1,14 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './client/App';
-import reportWebVitals from './client/reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./client/App";
+import reportWebVitals from "./client/reportWebVitals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Index from "./client/page/Index";
+import GameConnectionContextProvider from "./client/util/GameConnectionContext";
+import Page404 from "./client/page/404";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route
+          path="/game/:gameId/*"
+          element={
+            <GameConnectionContextProvider>
+              <App />
+            </GameConnectionContextProvider>
+          }
+        />
+        <Route path="*" element={<Page404 />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

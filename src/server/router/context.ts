@@ -1,22 +1,24 @@
-import { inferAsyncReturnType, initTRPC } from "@trpc/server";
+import { initTRPC } from "@trpc/server";
 import { CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { runningGames } from "../service/Game";
+import { User } from "../types/User";
+import { Game } from "../types/Game";
+import { connections } from "../service/Game";
 
-const defaultContext = {
-  user: { id: "" },
-  game: runningGames[0], // mock
-};
-
-export function createContext({ req, res }: CreateNextContextOptions) {
+export function createContext({ req, res }: CreateNextContextOptions): Context {
   if (!req.headers["www-authenticate"]) {
-    return defaultContext;
+    res.statusCode = 401;
+    return {} as Context;
   }
+  const userId: string = req.headers["www-authenticate"];
   return {
-    user: { id: req.headers["www-authenticate"]!! },
-    game: runningGames[0], // mock
+    user: { id: userId },
+    game: connections[userId],
   };
 }
 
-export type Context = inferAsyncReturnType<typeof createContext>;
+export type Context = {
+  user: User;
+  game: Game;
+};
 
 export const client = initTRPC.context<Context>().create();

@@ -5,14 +5,14 @@ import { GameState } from "../types/Game";
 import { PlayerState } from "../types/Player";
 import { answer } from "../service/game/answer";
 import { leave } from "../service/game/leave";
-import { join } from "../service/game/join";
 import { setName } from "../service/game/setName";
 import { nextQuestion } from "../service/game/nextQuestion";
 import scores from "../service/game/scores";
 import findPlayer from "../service/game/findOrCreatePlayer";
 import finishQuestion from "../service/game/finishQuestion";
-import { connections, runningGames } from "../service/Game";
+import { connections } from "../service/Game";
 import getUserId from "./auth";
+import { TRPCError } from "@trpc/server";
 
 function createQuery<T>(method: (ctx: Context, input: T) => void) {
   return ({ input, ctx }: { input: T; ctx: Context }) => {
@@ -30,7 +30,13 @@ function createSubscription(method: (ctx: Context, input: string) => void) {
   return ({ input, ctx }: { input: string; ctx: Context }) => {
     const token = input;
     const userId = getUserId(token);
-    const game = connections[userId] || runningGames[0];
+    const game = connections[userId];
+    if (!game) {
+      return new TRPCError({
+        code: "NOT_FOUND",
+        message: "Game not found",
+      });
+    }
     ctx = {
       ...ctx,
       user: { id: userId },
@@ -41,7 +47,6 @@ function createSubscription(method: (ctx: Context, input: string) => void) {
 }
 
 export const gameRouter = client.router({
-  join: client.procedure.input(z.number()).query(createQuery<number>(join)),
   leave: client.procedure.query(createQuery(leave)),
 
   nextQuestion: client.procedure.query(createQuery(nextQuestion)),

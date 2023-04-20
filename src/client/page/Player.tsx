@@ -9,9 +9,11 @@ import PlayerLobbyPage from "./player/PlayerLobby";
 import GameStateContextProvider from "../util/GameStateContext";
 import { PlayerStateContext } from "../util/PlayerStateContext";
 import { proxyClient } from "../util/proxyClient";
+import { GameConnectionContext } from "../util/GameConnectionContext";
 
 export default function Player() {
   const { name } = useContext(PlayerStateContext);
+  const { leave } = useContext(GameConnectionContext);
 
   if (!name) {
     return <NamePage />;
@@ -38,7 +40,12 @@ export default function Player() {
           </PhaseRoute>
         </PhaseRouter>
         <button
-          onClick={() => proxyClient.game.leave.query()}
+          onClick={() => {
+            // eslint-disable-next-line no-restricted-globals
+            if (confirm("Are you sure?")) {
+              proxyClient.game.leave.query().then(leave);
+            }
+          }}
           className="absolute top-4 left-4 bg-red-600 px-8 py-2 text-white font-bold rounded-md shadow-md"
         >
           Leave
