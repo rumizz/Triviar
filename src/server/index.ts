@@ -34,7 +34,12 @@ app.listen(process.env.API_PORT, () => {
 const wss = new ws.Server({
   port: parseInt(process.env.WEBSOCKET_PORT || "3001"),
 });
-const handler = applyWSSHandler({ wss, router, createContext });
+
+const handler = applyWSSHandler({
+  wss,
+  router,
+  createContext,
+});
 
 wss.on("connection", (ws) => {
   console.log(`++ Connection (${wss.clients.size})`);

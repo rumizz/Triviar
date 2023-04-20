@@ -7,11 +7,12 @@ import { answer } from "../service/game/answer";
 import { leave } from "../service/game/leave";
 import { join } from "../service/game/join";
 import { setName } from "../service/game/setName";
-import { addPlayer } from "../service/game/addPlayer";
 import { nextQuestion } from "../service/game/nextQuestion";
 import scores from "../service/game/scores";
-import findPlayer from "../service/game/findPlayer";
+import findPlayer from "../service/game/findOrCreatePlayer";
 import finishQuestion from "../service/game/finishQuestion";
+import { connections, runningGames } from "../service/Game";
+import getUserId from "./auth";
 
 function createQuery<T>(method: (ctx: Context, input: T) => void) {
   return ({ input, ctx }: { input: T; ctx: Context }) => {
@@ -22,6 +23,20 @@ function createQuery<T>(method: (ctx: Context, input: T) => void) {
     } else {
       method(ctx, input);
     }
+  };
+}
+
+function createSubscription(method: (ctx: Context, input: string) => void) {
+  return ({ input, ctx }: { input: string; ctx: Context }) => {
+    const token = input;
+    const userId = getUserId(token);
+    const game = connections[userId] || runningGames[0];
+    ctx = {
+      ...ctx,
+      user: { id: userId },
+      game,
+    };
+    return method(ctx, input);
   };
 }
 
@@ -39,16 +54,16 @@ export const gameRouter = client.router({
 
   answer: client.procedure.input(z.string()).query(createQuery<string>(answer)),
 
-  state: client.procedure.subscription(({ ctx }: { ctx: Context }) => {
-    return observable<GameState>(ctx.game.state.toTRPC());
-  }),
+  state: client.procedure.input(z.string()).subscription(
+    createSubscription(({ game }: Context) => {
+      return observable<GameState>(game.state.toTRPC());
+    })
+  ),
 
-  playerState: client.procedure.subscription(({ ctx }: { ctx: Context }) => {
-    if (!findPlayer(ctx.game, ctx.user.id)) {
-      addPlayer(ctx);
-    }
-    return observable<PlayerState>(
-      findPlayer(ctx.game, ctx.user.id).state.toTRPC()
-    );
-  }),
+  playerState: client.procedure.input(z.string()).subscription(
+    createSubscription(({ game, user }: Context) => {
+      const player = findPlayer(game, user.id);
+      return observable<PlayerState>(player.state.toTRPC());
+    })
+  ),
 });

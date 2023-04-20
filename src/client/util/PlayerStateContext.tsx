@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { PlayerState } from "src/server/types/Player";
 import { usePlayerStore } from "../store/playerStore";
-import { proxyClient } from "./proxyClient";
+import { proxyClient, token } from "./proxyClient";
 
 export const PlayerStateContext = createContext<PlayerState>({} as PlayerState);
 
@@ -15,7 +15,7 @@ export default function PlayerStateContextProvider({
   const { name, setName } = usePlayerStore();
 
   useEffect(() => {
-    const subscription = proxyClient.game.playerState.subscribe(undefined, {
+    const subscription = proxyClient.game.playerState.subscribe(token, {
       onStarted() {
         console.log("connected");
       },

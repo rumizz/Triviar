@@ -1,6 +1,6 @@
 import { Context } from "../../router/context";
 import { AnswerSymbol } from "../../types/AnswerOption";
-import findPlayer from "./findPlayer";
+import findPlayer from "./findOrCreatePlayer";
 import finishQuestion from "./finishQuestion";
 
 export function answer({ game, user }: Context, answerString: string) {

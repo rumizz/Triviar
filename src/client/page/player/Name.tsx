@@ -3,7 +3,6 @@ import { proxyClient } from "../../util/proxyClient";
 
 export default function NamePage() {
   const ref = useRef<HTMLInputElement>(null);
-
   return (
     <div className="absolute inset-0 bg-b flex flex-col justify-center items-center">
       <div className="flex flex-col">

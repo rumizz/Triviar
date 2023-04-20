@@ -26,7 +26,7 @@ const mockQuiz: Quiz = {
 };
 
 const mockGame: Game = {
-  id: "1",
+  id: "0",
   joinCode: 1234,
   questionIndex: 0,
   state: new Observable<GameState>({

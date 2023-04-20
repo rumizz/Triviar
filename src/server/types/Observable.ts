@@ -23,7 +23,6 @@ export class Observable<T extends object> {
     let partialValue: Partial<T>;
     if (valueOrFunc instanceof Function) {
       partialValue = valueOrFunc(this.value);
-      console.log(partialValue);
     } else {
       partialValue = valueOrFunc;
     }

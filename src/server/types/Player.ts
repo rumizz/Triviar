@@ -6,6 +6,7 @@ export class Player {
   state: Observable<PlayerState>;
   publicData(): PublicPlayerData {
     return {
+      id: this.id,
       name: this.state.get().name,
       score: this.state.get().score,
     };
@@ -29,6 +30,7 @@ export type PlayerState = {
 };
 
 export type PublicPlayerData = {
+  id: string;
   name: string;
   score: number;
 };

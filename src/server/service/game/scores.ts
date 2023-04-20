@@ -4,9 +4,6 @@ import { Phase } from "../../types/Phase";
 export default function scores({ game }: Context) {
   game.state.set({
     phase: Phase.scores,
-    players: game.players.map((player) => ({
-      name: player.state.get().name,
-      score: player.state.get().score,
-    })),
+    players: game.players.map((player) => player.publicData()),
   });
 }

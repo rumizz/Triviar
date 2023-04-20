@@ -1,14 +1,15 @@
 import { Context } from "../../router/context";
-import { addPlayer } from "./addPlayer";
-import findPlayer from "./findPlayer";
+import findPlayer from "./findOrCreatePlayer";
 
 export function setName({ game, user }: Context, name: string) {
-  if (!findPlayer(game, user.id)) {
-    addPlayer({ game, user });
-  }
   const player = findPlayer(game, user.id);
   player.state.set({ name });
-  game.state.set((prev) => ({
-    players: [...prev.players, player.publicData()],
-  }));
+  game.state.set((prev) => {
+    return {
+      players: [
+        ...prev.players.filter((p) => p.id !== player.id),
+        { ...player.publicData(), name },
+      ],
+    };
+  });
 }
