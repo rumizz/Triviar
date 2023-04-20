@@ -8,10 +8,10 @@ import {
 import { AppRouter } from "src/server/router/router";
 
 export const token =
-  localStorage.getItem("token") ??
+  sessionStorage.getItem("token") ??
   "ID-" + (Math.random() * 10000000).toFixed(0);
 
-localStorage.setItem("token", token);
+sessionStorage.setItem("token", token);
 
 export const proxyClient = createTRPCProxyClient<AppRouter>({
   links: [

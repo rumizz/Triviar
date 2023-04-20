@@ -19,6 +19,7 @@ const mockQuestion: Question = {
     mockAnswerOption,
     mockAnswerOption,
   ],
+  score: 1000,
 };
 const mockQuiz: Quiz = {
   title: "lorem",
@@ -47,6 +48,7 @@ const mockGame: Game = {
     },
     question: "Lorem ipsum dolor sit amet",
     players: [],
+    score: 1000,
   }),
   quiz: mockQuiz,
   players: [],

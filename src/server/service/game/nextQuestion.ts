@@ -23,6 +23,7 @@ export function nextQuestion({ game, user }: Context) {
   game.state.set({
     phase: Phase.question,
     question: question.title,
+    score: question.score,
     answeredCount: 0,
     expiryTimestamp,
     answerTexts: {

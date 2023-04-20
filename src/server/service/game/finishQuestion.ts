@@ -10,8 +10,9 @@ export default function finishQuestion({ game }: Context) {
     let answer = player.state.get().answer;
     if (answer) {
       let isCorrect = answerOptions[answer].correct;
-      console.log(player.state.get().name, isCorrect);
-      player.state.set({ isCorrect });
+      const newScore =
+        player.state.get().score + (isCorrect ? game.state.get().score : 0);
+      player.state.set({ isCorrect, score: newScore });
     }
   });
   game.state.set({ phase: Phase.answer });

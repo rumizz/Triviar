@@ -18,6 +18,7 @@ export type Game = {
 export type GameState = {
   phase: Phase;
   question: string;
+  score: number;
   answerTexts: { [id in AnswerSymbol]: string };
   answerCorrects: { [id in AnswerSymbol]: boolean };
   answeredCount: number;
