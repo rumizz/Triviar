@@ -18,28 +18,37 @@ export default function Watch() {
           <PhaseRoute value={Phase.question}>
             <>
               <QuestionPage view="watch" />
-              <NextButton
-                onClick={() => proxyClient.game.finishQuestion.query()}
-                text="Next"
-              />
+              <div className="absolute top-6 right-6 flex gap-6 justify-end">
+                <NextButton
+                  onClick={() => proxyClient.game.finishQuestion.query()}
+                  text="End timer"
+                  className="!bg-a"
+                />
+              </div>
             </>
           </PhaseRoute>
           <PhaseRoute value={Phase.answer}>
             <>
               <QuestionPage view="watch" />
-              <NextButton
-                onClick={() => proxyClient.game.endQuestion.query()}
-                text="Next"
-              />
+
+              <div className="absolute top-6 right-6 flex gap-4 justify-end">
+                <NextButton
+                  onClick={() => proxyClient.game.endQuestion.query()}
+                  text="Next"
+                />
+              </div>
             </>
           </PhaseRoute>
           <PhaseRoute value={Phase.scores}>
             <>
               <ScoresPage view="watch" />
-              <NextButton
-                onClick={() => proxyClient.game.nextQuestion.query()}
-                text="Next"
-              />
+
+              <div className="absolute top-6 right-6 flex gap-4 justify-end">
+                <NextButton
+                  onClick={() => proxyClient.game.nextQuestion.query()}
+                  text="Next"
+                />
+              </div>
             </>
           </PhaseRoute>
           <PhaseRoute value={Phase.podium}>

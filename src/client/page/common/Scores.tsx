@@ -9,17 +9,28 @@ export default function ScoresPage({ view }: ScoresPageProps) {
       <h1 className="text-center text-3xl font-bold my-8 text-white drop-shadow-md">
         Scores
       </h1>
-      <div className="flex flex-col justify-center items-stretch">
-        {Object.values(players).map(({ name, score }) => (
-          <div key={name} className="flex justify-between p-8">
-            <div className="bg-white w-48 py-4 text-center font-bold text-3xl">
-              {name}
+      <div className="flex flex-col px-8 justify-center items-stretch gap-6">
+        {Object.values(players)
+          .sort((a, b) => (a.score > b.score ? -1 : 1))
+          .map(({ name, score }, index) => (
+            <div className="flex flex-row">
+              <div className="flex flex-row items-center gap-6 w-full">
+                <div className="text-white font-bold drop-shadow-md text-3xl">
+                  {index + 1}.
+                </div>
+                <div className="flagparent">
+                  <div className="flag bg-white py-4 px-8 text-center font-bold text-3xl">
+                    {name}
+                  </div>
+                </div>
+              </div>
+              <div className="flagparent  ">
+                <div className="flag bg-white py-4 px-8 text-center font-bold text-3xl flex flex-row">
+                  {score}
+                </div>
+              </div>
             </div>
-            <div className="bg-white w-48 py-4 text-center font-bold text-3xl">
-              {score}
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

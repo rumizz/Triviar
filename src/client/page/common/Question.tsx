@@ -40,7 +40,7 @@ export default function QuestionPage({ view }: QuestionPageProps) {
     <div className="absolute inset-0 flex flex-col bg-c">
       <div className="flex-1 relative">
         {view === "watch" && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flagparent absolute inset-0 flex items-center justify-center">
             <div className="flag bg-white px-16 py-8 font-bold text-4xl shadow">
               {question}
             </div>
@@ -53,11 +53,12 @@ export default function QuestionPage({ view }: QuestionPageProps) {
             </p>
           </div>
         )}
-        <div className="absolute bottom-0 inset-x-0 flex flex-row p-6">
-          <p className="drop-shadow-md text-white text-2xl font-bold grow">
+        <div className="absolute bottom-0 inset-x-0 flex flex-row p-6 text-black">
+          <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">
             {phase === Phase.question ? `${seconds}s` : "Time's up!"}
           </p>
-          <p className="drop-shadow-md text-white text-2xl font-bold">{`${answeredCount} / ${
+          <span className="grow" />
+          <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">{`${answeredCount} / ${
             Object.values(players).length
           } answered`}</p>
         </div>

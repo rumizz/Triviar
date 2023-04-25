@@ -1,11 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./client/App";
-import reportWebVitals from "./client/reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Index from "./client/page/Index";
-import GameConnectionContextProvider from "./client/util/GameConnectionContext";
 import Page404 from "./client/page/404";
+import Index from "./client/page/Index";
+import Player from "./client/page/Player";
+import Watch from "./client/page/Watch";
+import MasterIndex from "./client/page/master/Index";
+import PlayerIndex from "./client/page/player/Index";
+import reportWebVitals from "./client/reportWebVitals";
+import GameConnectionContextProvider from "./client/util/GameConnectionContext";
+import "./client/index.css";
+import PlayerStateContextProvider from "./client/util/PlayerStateContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,11 +20,23 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/game" element={<PlayerIndex />} />
+        <Route path="/master" element={<MasterIndex />} />
         <Route
           path="/game/:gameId/*"
           element={
             <GameConnectionContextProvider>
-              <App />
+              <PlayerStateContextProvider>
+                <Player />
+              </PlayerStateContextProvider>
+            </GameConnectionContextProvider>
+          }
+        />
+        <Route
+          path="/master/:gameId/*"
+          element={
+            <GameConnectionContextProvider>
+              <Watch />
             </GameConnectionContextProvider>
           }
         />

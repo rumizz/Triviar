@@ -1,10 +1,15 @@
 import { useContext } from "react";
+import QRCode from "react-qr-code";
 import NextButton from "src/client/component/NextButton";
+import { GameConnectionContext } from "src/client/util/GameConnectionContext";
 import { GameStateContext } from "src/client/util/GameStateContext";
 import { proxyClient } from "src/client/util/proxyClient";
 
 export default function WatchLobbyPage() {
   const { players, joinCode } = useContext(GameStateContext);
+  const { id } = useContext(GameConnectionContext);
+
+  const url = new URL(`game/${id}`, window.location.origin).toString();
 
   return (
     <div className="flex flex-row bg-b absolute inset-0">
@@ -13,7 +18,10 @@ export default function WatchLobbyPage() {
           <div className="grow bg-white p-4 rounded-md">Join with code</div>
           <div className="bg-white p-4 rounded-md">{joinCode}</div>
         </div>
-        <div className="bg-white rounded-md w-full grow p-4">Or scan QR</div>
+        <div className="bg-white rounded-md w-full grow p-6 flex flex-col items-stretch gap-6">
+          <p>Or scan QR</p>
+          <QRCode value={url} className="w-full h-full max-h-80" />
+        </div>
       </div>
       <div className="w-1/2 h-full flex flex-col p-8 gap-8">
         <div className="flex flex-row">

@@ -5,7 +5,6 @@ export default function AnswerButton({
   value,
   onClick,
   view,
-  className,
   correct = undefined,
   playerAmount,
   grayedOut = false,
@@ -25,7 +24,7 @@ export default function AnswerButton({
   return (
     <div
       className={clsx("relative", {
-        grayscale: correct === false || grayedOut,
+        "opacity-50": correct === false || grayedOut,
       })}
     >
       <button
@@ -51,6 +50,7 @@ export default function AnswerButton({
             <div className="drop-shadow-md">{playerAmount}</div>
           </>
         )}
+        {/*correct && <Tick />*/}
       </button>
       <div
         className={clsx(

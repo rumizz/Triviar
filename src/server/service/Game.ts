@@ -10,7 +10,7 @@ const mockAnswerOption: AnswerOption = {
 
 const mockQuestion: Question = {
   title: "Lorem ipsum dolor sit amet",
-  time: 10000,
+  time: 100000,
   options: [
     mockAnswerOption,
     mockAnswerOption,
