@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { FaPlay } from "react-icons/fa";
 import QRCode from "react-qr-code";
 import NextButton from "src/client/component/NextButton";
 import { GameConnectionContext } from "src/client/util/GameConnectionContext";
@@ -28,10 +29,10 @@ export default function WatchLobbyPage() {
           <p className="font-bold text-3xl drop-shadow-md text-white opacity-80 grow">
             Joined - {players.length}
           </p>
-          <NextButton
-            onClick={() => proxyClient.game.nextQuestion.query()}
-            text="start"
-          />
+          <NextButton onClick={() => proxyClient.game.nextQuestion.query()}>
+            <FaPlay />
+            Start
+          </NextButton>
         </div>
         <div className="grow flex flex-row flex-wrap gap-4 items-start justify-start content-start">
           {Object.values(players)

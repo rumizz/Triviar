@@ -8,6 +8,7 @@ import NextButton from "../component/NextButton";
 import { proxyClient } from "../util/proxyClient";
 import Footer from "./watch/Footer";
 import ToolContainer from "../component/ToolContainer";
+import { FaArrowRight, FaStop } from "react-icons/fa";
 
 export default function Watch() {
   return (
@@ -23,9 +24,11 @@ export default function Watch() {
               <ToolContainer>
                 <NextButton
                   onClick={() => proxyClient.game.finishQuestion.query()}
-                  text="End timer"
                   className="!bg-a"
-                />
+                >
+                  <FaStop />
+                  End Timer
+                </NextButton>
               </ToolContainer>
             </>
           </PhaseRoute>
@@ -36,8 +39,10 @@ export default function Watch() {
               <ToolContainer>
                 <NextButton
                   onClick={() => proxyClient.game.endQuestion.query()}
-                  text="Next"
-                />
+                >
+                  <FaArrowRight />
+                  Next
+                </NextButton>
               </ToolContainer>
             </>
           </PhaseRoute>
@@ -48,8 +53,10 @@ export default function Watch() {
               <ToolContainer>
                 <NextButton
                   onClick={() => proxyClient.game.nextQuestion.query()}
-                  text="Next"
-                />
+                >
+                  <FaArrowRight />
+                  Next
+                </NextButton>
               </ToolContainer>
             </>
           </PhaseRoute>

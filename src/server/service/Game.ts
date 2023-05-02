@@ -22,7 +22,8 @@ const mockQuestion: Question = {
 
 export const mockQuiz: Quiz = {
   id: "1",
-  title: "lorem",
+  title: "Test Game",
+  defaultTime: 30,
   questions: [
     mockQuestion,
     mockQuestion,

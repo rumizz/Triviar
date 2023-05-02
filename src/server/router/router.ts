@@ -3,6 +3,7 @@ import { client } from "./context";
 import { gameRouter } from "./game-router";
 import createGame from "../service/game/create";
 import { join } from "../service/game/join";
+import { quizRouter } from "./quiz-router";
 
 export const router = client.router({
   createGame: client.procedure.input(z.string()).query(({ input, ctx }) => {
@@ -13,6 +14,8 @@ export const router = client.router({
     return join(ctx, input);
   }),
   game: gameRouter,
+
+  quiz: quizRouter,
 });
 
 export type AppRouter = typeof router;

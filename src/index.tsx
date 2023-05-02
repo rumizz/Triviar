@@ -11,6 +11,7 @@ import reportWebVitals from "./client/reportWebVitals";
 import GameConnectionContextProvider from "./client/util/GameConnectionContext";
 import "./client/index.css";
 import PlayerStateContextProvider from "./client/util/PlayerStateContext";
+import QuizForm from "./client/page/master/QuizForm";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,6 +23,8 @@ root.render(
         <Route path="/" element={<Index />} />
         <Route path="/game" element={<PlayerIndex />} />
         <Route path="/master" element={<MasterIndex />} />
+        <Route path="/new" element={<QuizForm />} />
+        <Route path="/edit/:quizId" element={<QuizForm />} />
         <Route
           path="/game/:gameId/*"
           element={

@@ -1,25 +1,27 @@
 import clsx from "clsx";
+import Button from "./Button";
+import { ReactNode } from "react";
 
 export type NextButtonProps = {
   onClick: () => void;
-  text: string;
+  children?: ReactNode;
   className?: string;
 };
 
 export default function NextButton({
   onClick,
-  text,
+  children,
   className,
 }: NextButtonProps) {
   return (
-    <button
+    <Button
       onClick={onClick}
       className={clsx(
-        "bg-d rounded-full w-fit px-8 py-2 text-white font-bold drop-shadow-md",
+        "bg-d rounded-full w-fit py-2 text-white font-bold drop-shadow-md",
         className
       )}
     >
-      <span className="drop-shadow-md">{text}</span>
-    </button>
+      {children}
+    </Button>
   );
 }
