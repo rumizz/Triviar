@@ -20,7 +20,7 @@ export default function PlayerStateContextProvider({
         console.log("connected");
       },
       onData(data: PlayerState) {
-        console.log("received player state", data);
+        console.log("received player state", JSON.stringify(data));
 
         if (data.name) {
           // if the server has a name for us, use it

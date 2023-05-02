@@ -12,6 +12,7 @@ export function answer({ game, user }: Context, answerString: string) {
   let prevAnswer = player.state.get().answer;
 
   player.state.set({ answer });
+  console.log("answer", user.id, player.state.get().answer);
 
   if (!prevAnswer) {
     if (

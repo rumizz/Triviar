@@ -20,7 +20,7 @@ export default function QuestionPage({ view }: QuestionPageProps) {
   } = useContext(GameStateContext);
 
   const { myAnswer, setMyAnswer } = usePlayerStore();
-  const { seconds, restart } = useTimer({
+  const { seconds, minutes, restart } = useTimer({
     expiryTimestamp: new Date(expiryTimestamp),
   });
 
@@ -55,7 +55,9 @@ export default function QuestionPage({ view }: QuestionPageProps) {
         )}
         <div className="absolute bottom-0 inset-x-0 flex flex-row p-6 text-black">
           <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">
-            {phase === Phase.question ? `${seconds}s` : "Time's up!"}
+            {phase === Phase.question
+              ? `${minutes * 60 + seconds}s`
+              : "Time's up!"}
           </p>
           <span className="grow" />
           <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">{`${answeredCount} / ${

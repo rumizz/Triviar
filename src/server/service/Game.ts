@@ -5,14 +5,14 @@ import { Quiz } from "../types/Quiz";
 
 const mockAnswerOption: AnswerOption = {
   text: "Lorem ipsum dolor sit amet",
-  correct: true,
+  correct: false,
 };
 
 const mockQuestion: Question = {
   title: "Lorem ipsum dolor sit amet",
   time: 100000,
   options: [
-    mockAnswerOption,
+    { ...mockAnswerOption, correct: true },
     mockAnswerOption,
     mockAnswerOption,
     mockAnswerOption,
