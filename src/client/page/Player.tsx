@@ -10,6 +10,7 @@ import GameStateContextProvider from "../util/GameStateContext";
 import { PlayerStateContext } from "../util/PlayerStateContext";
 import { proxyClient } from "../util/proxyClient";
 import { GameConnectionContext } from "../util/GameConnectionContext";
+import Footer from "./player/Footer";
 
 export default function Player() {
   const { name } = useContext(PlayerStateContext);
@@ -21,7 +22,7 @@ export default function Player() {
 
   return (
     <GameStateContextProvider>
-      <>
+      <div className="flex flex-col absolute inset-0">
         <PhaseRouter>
           <PhaseRoute value={Phase.lobby}>
             <PlayerLobbyPage />
@@ -46,11 +47,12 @@ export default function Player() {
               proxyClient.game.leave.query().then(leave);
             }
           }}
-          className="absolute top-4 left-4 bg-red-600 px-8 py-2 text-white font-bold rounded-md shadow-md"
+          className="absolute top-4 left-4 bg-red-600 px-8 py-2 text-white font-bold rounded-md shadow-md z-20"
         >
           Leave
         </button>
-      </>
+        <Footer />
+      </div>
     </GameStateContextProvider>
   );
 }

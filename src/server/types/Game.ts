@@ -8,7 +8,6 @@ import { v4 as uuid } from "uuid";
 export class Game {
   id: string;
   quiz: Quiz;
-  questionIndex: number = 0;
   state: Observable<GameState> = new Observable<GameState>({
     answeredCount: 0,
     phase: Phase.lobby,
@@ -29,6 +28,8 @@ export class Game {
     players: [],
     score: 0,
     joinCode: 0,
+    questionIndex: 1,
+    totalQuestions: 0,
   });
   players: Player[] = [];
   answerOptions: { [id in AnswerSymbol]: AnswerOption } = {
@@ -50,7 +51,10 @@ export class Game {
   constructor(quiz: Quiz) {
     this.id = uuid();
     this.quiz = quiz;
-    this.state.set({ joinCode: Math.floor(Math.random() * 900000) + 100000 });
+    this.state.set({
+      joinCode: Math.floor(Math.random() * 900000) + 100000,
+      totalQuestions: quiz.questions.length,
+    });
   }
 }
 
@@ -64,4 +68,6 @@ export type GameState = {
   answeredCount: number;
   expiryTimestamp: number;
   players: PublicPlayerData[];
+  questionIndex: number;
+  totalQuestions: number;
 };

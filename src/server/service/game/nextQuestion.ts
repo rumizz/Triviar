@@ -3,8 +3,12 @@ import { Phase } from "../../types/Phase";
 import finishQuestion from "./finishQuestion";
 
 export function nextQuestion({ game, user }: Context) {
-  const question = game.quiz.questions[game.questionIndex];
-  game.questionIndex++;
+  if (game.state.get().questionIndex >= game.quiz.questions.length) {
+    return;
+  }
+  game.state.set({ questionIndex: game.state.get().questionIndex + 1 });
+  const question = game.quiz.questions[game.state.get().questionIndex];
+
   game.players.forEach((player) => {
     player.state.set({ answer: undefined });
   });

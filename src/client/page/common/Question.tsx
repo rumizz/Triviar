@@ -37,7 +37,7 @@ export default function QuestionPage({ view }: QuestionPageProps) {
   };
 
   return (
-    <div className="absolute inset-0 flex flex-col bg-c">
+    <div className="grow flex flex-col bg-c z-10">
       <div className="flex-1 relative">
         {view === "watch" && (
           <div className="flagparent absolute inset-0 flex items-center justify-center">
@@ -53,19 +53,22 @@ export default function QuestionPage({ view }: QuestionPageProps) {
             </p>
           </div>
         )}
-        <div className="absolute bottom-0 inset-x-0 flex flex-row p-6 text-black">
-          <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">
-            {phase === Phase.question
-              ? `${minutes * 60 + seconds}s`
-              : "Time's up!"}
-          </p>
-          <span className="grow" />
-          <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">{`${answeredCount} / ${
-            Object.values(players).length
-          } answered`}</p>
-        </div>
+
+        {view === "watch" && (
+          <div className="absolute bottom-0 inset-x-0 flex flex-row p-4 text-black">
+            <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">
+              {phase === Phase.question
+                ? `${minutes * 60 + seconds}s`
+                : "Time's up!"}
+            </p>
+            <span className="grow" />
+            <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">{`${answeredCount} / ${
+              Object.values(players).length
+            }`}</p>
+          </div>
+        )}
       </div>
-      <div className="flex-1 bg-gray-800 grid grid-cols-2 grid-rows-2 gap-x-6 gap-y-8 p-6">
+      <div className="flex-1 bg-gray-800 grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-6 p-4 pb-6">
         {Object.entries(answerTexts).map(([key, text]) => (
           <AnswerButton
             key={key}

@@ -23,7 +23,20 @@ const mockQuestion: Question = {
 export const mockQuiz: Quiz = {
   id: "1",
   title: "lorem",
-  questions: [mockQuestion, mockQuestion, mockQuestion, mockQuestion],
+  questions: [
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+    mockQuestion,
+  ],
 };
 
 export let quizzes: Quiz[] = [mockQuiz];
