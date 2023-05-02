@@ -30,7 +30,7 @@ export default function AnswerButton({
       <button
         onClick={onClick}
         className={clsx(
-          "relative z-20 w-full h-full text-left rounded-md text-white font-bold flex flex-row items-center",
+          "relative z-20 pr-4 w-full h-full text-left rounded-md text-white font-bold flex flex-row items-center justify-around",
           classNames[id],
           {
             "justify-center": view === "player",
@@ -38,7 +38,7 @@ export default function AnswerButton({
         )}
       >
         <div
-          className={clsx("text-4xl w-8 m-6 text-center  drop-shadow-md", {
+          className={clsx("text-4xl m-6 text-center drop-shadow-md", {
             "text-5xl": view === "player",
           })}
         >
