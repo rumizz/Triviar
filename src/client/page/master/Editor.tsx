@@ -28,7 +28,9 @@ const Editor = <T extends inputType>({
   additionalCheckbox,
 }: EditorProps<T>) => {
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value as T);
+    let value =
+      type === "number" ? parseInt(event.target.value) : event.target.value;
+    onChange(value as T);
   };
 
   return (

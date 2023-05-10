@@ -1,12 +1,11 @@
 import { AnswerOption } from "./AnswerOption";
-import { IDictionary } from "./IDictionary";
 
 export class Question {
   title: string;
-  options: AnswerOption[];
   time: number;
   score: number;
-  usingDefaults: IDictionary<boolean>;
+  usingDefaults: DefaultQuestionOptions;
+  options: AnswerOption[];
   constructor(defaultQuestion: Question) {
     this.title = "";
     this.options = [
@@ -22,3 +21,8 @@ export class Question {
     Object.assign(this, defaultQuestion);
   }
 }
+
+export type DefaultQuestionOptions = {
+  time: boolean;
+  score: boolean;
+};

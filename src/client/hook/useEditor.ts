@@ -62,7 +62,6 @@ export function useArrayEditor<T>(
   parentEditorListener?: EditorListener<T[]>
 ): [
   T[],
-  (value: T[]) => void,
   ArrayEditorFactory<T>,
   (props?: any) => void,
   (index: number) => () => void
@@ -101,5 +100,5 @@ export function useArrayEditor<T>(
     });
   };
 
-  return [value, setValue, editorFactory, addNew, deleterFactory];
+  return [value, editorFactory, addNew, deleterFactory];
 }

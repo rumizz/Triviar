@@ -10,7 +10,7 @@ const QuestionsEditor: FC<{
   defaultQuestion: Question;
   onChange: EditorListener<Question[]>;
 }> = ({ value, defaultQuestion, onChange }) => {
-  const [questions, setQuestions, listEditorFactory, addNew, deleterFactory] =
+  const [questions, listEditorFactory, addNew, deleterFactory] =
     useArrayEditor<Question>(
       value,
       () => {
@@ -31,6 +31,7 @@ const QuestionsEditor: FC<{
       </div>
       {questions.map((question, index) => (
         <QuestionEditor
+          key={index}
           index={index}
           defaultValue={defaultQuestion}
           onDelete={deleterFactory(index)}

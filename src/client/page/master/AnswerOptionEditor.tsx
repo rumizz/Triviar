@@ -8,8 +8,10 @@ const AnswerOptionEditor: FC<{
   value: AnswerOption;
   onChange: (a: AnswerOption) => void;
 }> = ({ value, onChange }) => {
-  const [answerOption, editorFactory, setAnswerOption] =
-    useEditor<AnswerOption>(value, onChange);
+  const [answerOption, editorFactory] = useEditor<AnswerOption>(
+    value,
+    onChange
+  );
   return (
     <div>
       <Editor
