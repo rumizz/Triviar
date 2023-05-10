@@ -21,7 +21,7 @@ export function nextQuestion({ game, user }: Context) {
   let expiryTimestamp = Date.now() + question.time;
   game.timeout = setTimeout(
     () => finishQuestion({ game, user }),
-    question.time + 1000
+    question.time * 1000 + 1000
   );
 
   game.state.set({

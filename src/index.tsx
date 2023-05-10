@@ -23,7 +23,7 @@ root.render(
         <Route path="/" element={<Index />} />
         <Route path="/game" element={<PlayerIndex />} />
         <Route path="/master" element={<MasterIndex />} />
-        <Route path="/new" element={<QuizForm />} />
+        <Route path="/new" element={<QuizForm isNew />} />
         <Route path="/edit/:quizId" element={<QuizForm />} />
         <Route
           path="/game/:gameId/*"

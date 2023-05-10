@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { EditorListener } from "../hook/useEditor";
+import { EditorListener } from "../../hook/useEditor";
 
 type inputTypeName = "text" | "number";
 type inputType = string | number;
@@ -13,7 +13,7 @@ interface EditorProps<T extends inputType = string> {
   placeholder?: T;
   defaultValue?: T;
   usingDefault?: boolean;
-  defaultCheckbox?: ReactNode;
+  additionalCheckbox?: ReactNode;
 }
 
 const Editor = <T extends inputType>({
@@ -25,7 +25,7 @@ const Editor = <T extends inputType>({
   placeholder,
   defaultValue,
   usingDefault = false,
-  defaultCheckbox,
+  additionalCheckbox,
 }: EditorProps<T>) => {
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value as T);
@@ -33,14 +33,15 @@ const Editor = <T extends inputType>({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex mt-2">
-        <label className="text-white grow" htmlFor={name}>
+      <div className="flex mt-2 items-center">
+        <label className="grow" htmlFor={name}>
           {label}
         </label>
-        {defaultCheckbox}
+        {additionalCheckbox}
       </div>
       <input
-        className="px-4 py-2 rounded-md"
+        className="px-4 py-2 rounded-md border-2 border-black disabled:opacity-40"
+        name={name}
         type={type}
         placeholder={placeholder?.toString()}
         onChange={handleOnChange}

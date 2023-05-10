@@ -47,9 +47,16 @@ export function useEditor<T extends Object | null>(
 /**
  * Creates a listener by a given type Q and key id for arrays
  */
-export type ArrayEditorFactory<Q> = (id: number) => EditorListener<Q>;
+export type ArrayEditorFactory<Q> = (
+  obj: object,
+  id: number
+) => {
+  name: number;
+  value: Q;
+  onChange: EditorListener<Q>;
+};
 
-export function useArrayEditor<T extends { id: string }>(
+export function useArrayEditor<T>(
   defaultValue: T[],
   createElem: (props?: any) => T,
   parentEditorListener?: EditorListener<T[]>
@@ -64,17 +71,20 @@ export function useArrayEditor<T extends { id: string }>(
 
   useEffect(() => {
     parentEditorListener?.(value);
-  }, [parentEditorListener, value]);
+  }, [value]);
 
-  const editorFactory: ArrayEditorFactory<T> =
-    (id: number): EditorListener<T> =>
-    (value: T) => {
+  const editorFactory: ArrayEditorFactory<T> = (obj: any, id: number) => ({
+    name: id,
+    value: obj[id],
+    onChange: (value: T) => {
       setValue((prev: T[]) => {
         let newValue: T[] = [...prev];
         newValue[id] = value;
         return newValue;
       });
-    };
+    },
+  });
+
   const addNew = (props?: any) => {
     setValue((prev: T[]) => {
       let newValue: T[] = [...prev];

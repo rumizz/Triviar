@@ -10,7 +10,7 @@ const mockAnswerOption: AnswerOption = {
 
 const mockQuestion: Question = {
   title: "Lorem ipsum dolor sit amet",
-  time: 100000,
+  time: 30,
   options: [
     { ...mockAnswerOption, correct: true },
     mockAnswerOption,
@@ -18,12 +18,17 @@ const mockQuestion: Question = {
     mockAnswerOption,
   ],
   score: 1000,
+  usingDefaults: {
+    time: false,
+    score: false,
+  },
 };
 
 export const mockQuiz: Quiz = {
   id: "1",
   title: "Test Game",
   defaultTime: 30,
+  defaultScore: 1000,
   questions: [
     mockQuestion,
     mockQuestion,
