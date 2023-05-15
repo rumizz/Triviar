@@ -6,10 +6,9 @@ import {
   wsLink,
 } from "@trpc/react";
 import { AppRouter } from "src/server/router/router";
+import { v4 as uuid } from "uuid";
 
-export const token =
-  sessionStorage.getItem("token") ??
-  "ID-" + (Math.random() * 10000000).toFixed(0);
+export const token = sessionStorage.getItem("token") ?? "Anon-" + uuid();
 
 sessionStorage.setItem("token", token);
 

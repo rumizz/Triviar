@@ -40,7 +40,8 @@ export const quizRouter = client.router({
     quiz.id = uuid();
     quiz.ownerId = ctx.user.id;
     console.log("create", quiz);
-    return db.QuizModel.insertMany([quiz]);
+    db.QuizModel.insertMany([quiz]);
+    return quiz.id;
   }),
 
   update: client.procedure.input(quizSchema).query(({ input, ctx }) => {

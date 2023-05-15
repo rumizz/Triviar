@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "src/client/component/Button";
 import Loading from "src/client/component/Loading";
 import { useEditor } from "src/client/hook/useEditor";
@@ -17,6 +17,7 @@ const QuizForm: FC<{ isNew?: boolean }> = ({ isNew }) => {
   >(isNew ? "" : "loading");
   const { quizId } = useParams();
   const [quiz, editorFactory, setQuiz] = useEditor<Quiz | null>(new Quiz());
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (quizId) {
@@ -39,15 +40,18 @@ const QuizForm: FC<{ isNew?: boolean }> = ({ isNew }) => {
     setStatus("loading");
     const reconstructed = new Quiz(quiz);
     console.log("save", reconstructed);
-    const success = isNew
+    const quizId = isNew
       ? await proxyClient.quiz.create.query(reconstructed)
       : await proxyClient.quiz.update.query(reconstructed);
 
-    if (!success) {
+    if (!quizId) {
       setStatus("error");
       return;
     }
     setStatus("saved");
+    if (isNew) {
+      navigate(`/edit/${quizId}`, { replace: true });
+    }
   };
 
   if (status === "notfound") return <Page404 />;

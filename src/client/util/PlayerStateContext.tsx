@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { PlayerState } from "src/server/types/Player";
 import { usePlayerStore } from "../store/playerStore";
 import { proxyClient, token } from "./proxyClient";
-import { GameStateContext } from "./GameStateContext";
 import { GameConnectionContext } from "./GameConnectionContext";
 
 export const PlayerStateContext = createContext<PlayerState>({} as PlayerState);
