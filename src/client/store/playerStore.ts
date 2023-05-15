@@ -7,15 +7,16 @@ export const usePlayerStore = create(
     myAnswer: AnswerSymbol | null;
     setMyAnswer: (myAnswer: AnswerSymbol) => void;
     clear: () => void;
-    name: string;
-    setName: (name: string) => void;
+    names: { [key in string]: string };
+    setName: (name: string, gameId: string) => void;
   }>(
     (set) => ({
       myAnswer: null,
       setMyAnswer: (myAnswer: AnswerSymbol) => set({ myAnswer }),
       clear: () => set({ myAnswer: null }),
-      name: "",
-      setName: (name: string) => set({ name }),
+      names: {} as { [key in string]: string },
+      setName: (name: string, gameId: string) =>
+        set((prev) => ({ names: { ...prev.names, [gameId]: name } })),
     }),
     {
       name: "player-store",

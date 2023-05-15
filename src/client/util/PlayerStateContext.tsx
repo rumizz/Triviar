@@ -1,7 +1,9 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { PlayerState } from "src/server/types/Player";
 import { usePlayerStore } from "../store/playerStore";
 import { proxyClient, token } from "./proxyClient";
+import { GameStateContext } from "./GameStateContext";
+import { GameConnectionContext } from "./GameConnectionContext";
 
 export const PlayerStateContext = createContext<PlayerState>({} as PlayerState);
 
@@ -12,7 +14,8 @@ export default function PlayerStateContextProvider({
 }) {
   const [state, setState] = useState<PlayerState>({} as PlayerState);
 
-  const { name, setName } = usePlayerStore();
+  const { names, setName } = usePlayerStore();
+  const { id } = useContext(GameConnectionContext);
 
   useEffect(() => {
     const subscription = proxyClient.game.playerState.subscribe(token, {
@@ -24,10 +27,11 @@ export default function PlayerStateContextProvider({
 
         if (data.name) {
           // if the server has a name for us, use it
-          setName(data.name);
-        } else if (name) {
+          setName(data.name, id);
+        } else if (names[id]) {
           // if the server does not have a name for us, but we do, send it to the server
-          proxyClient.game.setName.query(name);
+          proxyClient.game.setName.query(names[id]);
+          data.name = names[id];
         }
 
         setState((prev) => ({ ...prev, ...data }));
