@@ -28,7 +28,7 @@ export class Game {
     players: [],
     score: 0,
     joinCode: 0,
-    questionIndex: 1,
+    questionIndex: -1,
     totalQuestions: 0,
   });
   players: Player[] = [];

@@ -3,15 +3,25 @@ import { Phase } from "../../types/Phase";
 import finishQuestion from "./finishQuestion";
 
 export function nextQuestion({ game, user }: Context) {
-  if (game.state.get().questionIndex >= game.quiz.questions.length) {
+  console.log("nextQuestion");
+  if (game.state.get().questionIndex + 1 >= game.quiz.questions.length) {
+    console.log("No more questions");
     return;
   }
-  game.state.set({ questionIndex: game.state.get().questionIndex + 1 });
-  const question = game.quiz.questions[game.state.get().questionIndex];
+
+  const nextQuestionIndex = game.state.get().questionIndex + 1;
+  const question = game.quiz.questions[nextQuestionIndex];
 
   game.players.forEach((player) => {
     player.state.set({ answer: undefined });
   });
+  console.log(
+    "next question",
+    nextQuestionIndex,
+    "/",
+    game.quiz.questions.length,
+    question
+  );
   game.answerOptions = {
     a: question.options[0],
     b: question.options[1],
@@ -25,6 +35,7 @@ export function nextQuestion({ game, user }: Context) {
   );
 
   game.state.set({
+    questionIndex: nextQuestionIndex,
     phase: Phase.question,
     question: question.title,
     score: question.score,
