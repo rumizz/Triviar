@@ -6,6 +6,7 @@ import { join } from "../service/game/join";
 import { quizRouter } from "./quiz-router";
 import { db } from "../service/db/db";
 import { Quiz } from "../types/Quiz";
+import { authRouter } from "./auth-router";
 
 export const router = client.router({
   createGame: client.procedure
@@ -26,9 +27,10 @@ export const router = client.router({
   join: client.procedure.input(z.number()).query(({ input, ctx }) => {
     return join(ctx, input);
   }),
-  game: gameRouter,
 
+  game: gameRouter,
   quiz: quizRouter,
+  auth: authRouter,
 });
 
 export type AppRouter = typeof router;

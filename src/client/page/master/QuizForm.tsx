@@ -50,7 +50,7 @@ const QuizForm: FC<{ isNew?: boolean }> = ({ isNew }) => {
     }
     setStatus("saved");
     if (isNew) {
-      navigate(`/edit/${quizId}`, { replace: true });
+      navigate(`/master/edit/${quizId}`, { replace: true });
     }
   };
 
@@ -59,7 +59,7 @@ const QuizForm: FC<{ isNew?: boolean }> = ({ isNew }) => {
   if (status === "loading" || quiz == null) return <Loading />;
 
   return (
-    <main className="bg-white absolute inset-0 flex flex-col gap-4 p-4 overflow-y-scroll">
+    <main className="bg-gray-100 absolute inset-0 flex flex-col gap-4 p-4 overflow-y-scroll">
       <div className="flex items-center gap-4">
         <div className="grow font-bold text-3xl text-left w-full">
           Quiz editor

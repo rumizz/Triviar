@@ -6,6 +6,7 @@ import Loading from "src/client/component/Loading";
 import { proxyClient } from "src/client/util/proxyClient";
 import { Quiz } from "src/server/types/Quiz";
 import QuizCard from "./QuizCard";
+import UserMenu from "src/client/component/UserMenu";
 
 export default function MasterIndex() {
   const navigate = useNavigate();
@@ -39,13 +40,20 @@ export default function MasterIndex() {
 
   return (
     <main className="absolute inset-0 flex p-8 flex-col items-stretch gap-4 bg-b overflow-y-auto">
-      <h1 className="text-white font-bold text-3xl text-left w-full">Games</h1>
+      <div className="relative">
+        <h1 className="text-white font-bold text-3xl text-left w-full">
+          Games
+        </h1>
+        <div className="absolute right-0 inset-y-0 z-20">
+          <UserMenu />
+        </div>
+      </div>
       <p className="text-white opacity-70">No running games</p>
       <div className="relative">
         <h1 className="text-white font-bold text-3xl text-left w-full">
           Quizzes
         </h1>
-        <Link to="/new">
+        <Link to="/master/new">
           <Button className="absolute right-0 inset-y-0 bg-c ">
             <FaPlus />
             New Quiz

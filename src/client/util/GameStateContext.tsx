@@ -2,8 +2,9 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { GameState } from "src/server/types/Game";
 import { Phase } from "src/server/types/Phase";
 import { usePlayerStore } from "../store/playerStore";
-import { proxyClient, token } from "./proxyClient";
+import { proxyClient } from "./proxyClient";
 import { GameConnectionContext } from "./GameConnectionContext";
+import { useLoginStore } from "../store/loginStore";
 
 export const GameStateContext = createContext<GameState>({} as GameState);
 
@@ -15,6 +16,7 @@ export default function GameStateContextProvider({
   const [state, setState] = useState<GameState>({} as GameState);
 
   const { clear } = usePlayerStore();
+  const { token } = useLoginStore();
   const { leave } = useContext(GameConnectionContext);
 
   useEffect(() => {

@@ -12,6 +12,8 @@ import GameConnectionContextProvider from "./client/util/GameConnectionContext";
 import "./client/index.css";
 import PlayerStateContextProvider from "./client/util/PlayerStateContext";
 import QuizForm from "./client/page/master/QuizForm";
+import LoginContextProvider from "./client/util/LoginContext";
+import RegisterPage from "./client/page/Register";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,9 +24,6 @@ root.render(
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/game" element={<PlayerIndex />} />
-        <Route path="/master" element={<MasterIndex />} />
-        <Route path="/new" element={<QuizForm isNew />} />
-        <Route path="/edit/:quizId" element={<QuizForm />} />
         <Route
           path="/game/:gameId/*"
           element={
@@ -36,13 +35,27 @@ root.render(
           }
         />
         <Route
-          path="/master/:gameId/*"
+          path="/master/*"
           element={
-            <GameConnectionContextProvider>
-              <Watch />
-            </GameConnectionContextProvider>
+            <LoginContextProvider>
+              <Routes>
+                <Route path="/" element={<MasterIndex />} />
+                <Route path="/new" element={<QuizForm isNew />} />
+                <Route path="/edit/:quizId" element={<QuizForm />} />
+
+                <Route
+                  path="/:gameId/*"
+                  element={
+                    <GameConnectionContextProvider>
+                      <Watch />
+                    </GameConnectionContextProvider>
+                  }
+                />
+              </Routes>
+            </LoginContextProvider>
           }
         />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>

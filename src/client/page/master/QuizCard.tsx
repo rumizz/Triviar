@@ -17,7 +17,7 @@ const QuizCard: FC<{
         <div>{quiz.questions.length} questions</div>
       </div>
       <div className="mt-4 flex flex-row items-end gap-2 flex-wrap">
-        <Link to={`/edit/${quiz.id}`}>
+        <Link to={`/master/edit/${quiz.id}`}>
           <Button className="bg-b rounded-md text-white font-bold">
             <FaEdit />
             Edit

@@ -8,7 +8,7 @@ import path from "path";
 import ws from "ws";
 import { router } from "./router/router";
 
-import { createContext } from "./router/context";
+import { createContext, createWSSContext } from "./router/context";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../.env"),
@@ -38,7 +38,7 @@ const wss = new ws.Server({
 const handler = applyWSSHandler({
   wss,
   router,
-  createContext,
+  createContext: createWSSContext,
 });
 
 wss.on("connection", (ws) => {

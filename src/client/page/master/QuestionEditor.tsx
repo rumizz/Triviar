@@ -25,7 +25,7 @@ const QuestionEditor: FC<{
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
-    <div className="border-2 px-4 pt-1 rounded-md">
+    <div className="bg-white shadow-md border-2 px-4 pt-1 rounded-md">
       <div
         onClick={() => setIsOpen((isOpen) => !isOpen)}
         className={clsx(

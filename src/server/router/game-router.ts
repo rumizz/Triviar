@@ -11,8 +11,8 @@ import scores from "../service/game/scores";
 import findPlayer from "../service/game/findOrCreatePlayer";
 import finishQuestion from "../service/game/finishQuestion";
 import { connections } from "../service/Game";
-import getUserId from "./auth";
 import { TRPCError } from "@trpc/server";
+import { getUserIdFromToken } from "../service/auth/token";
 
 function createQuery<T>(method: (ctx: Context, input: T) => void) {
   return ({ input, ctx }: { input: T; ctx: Context }) => {
@@ -27,9 +27,10 @@ function createQuery<T>(method: (ctx: Context, input: T) => void) {
 }
 
 function createSubscription(method: (ctx: Context, input: string) => void) {
-  return ({ input, ctx }: { input: string; ctx: Context }) => {
+  return async ({ input, ctx }: { input: string; ctx: Context }) => {
+    console.log("subscription open", input);
     const token = input;
-    const userId = getUserId(token);
+    const userId = await getUserIdFromToken(token);
     const game = connections[userId];
     if (!game) {
       return new TRPCError({

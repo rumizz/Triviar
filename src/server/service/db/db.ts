@@ -29,6 +29,13 @@ const QuizSchema = new mongoose.Schema<Quiz>({
   ],
 });
 
+const UserModel = new mongoose.Schema({
+  id: String,
+  name: String,
+  passwordHash: String,
+});
+
 export const db = {
   QuizModel: mongoose.model("Quiz", QuizSchema),
+  UserModel: mongoose.model("User", UserModel),
 };
