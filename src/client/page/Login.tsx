@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { proxyClient } from "../util/proxyClient";
 import { useLoginStore } from "../store/loginStore";
-import { set } from "mongoose";
 
 type Inputs = {
   username: string;

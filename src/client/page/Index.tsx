@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Index() {
   return (
-    <main className="absolute inset-0 flex flex-col justify-center items-center font-bold text-xl">
+    <main className="bg-gray-100 absolute inset-0 flex flex-col justify-center items-center font-bold text-xl">
       <div className="text-gray-800  text-2xl">Join as</div>
       <div className="text-white flex p-8 flex-row gap-8 items-stretch justify-center">
         <Link to="/master" className="flex-1">

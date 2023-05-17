@@ -23,20 +23,24 @@ const QuestionEditor: FC<{
       editorFactory(question, "usingDefaults").onChange
     );
 
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <div className="bg-white shadow-md border-2 px-4 pt-1 rounded-md">
+    <div className="bg-white shadow-md px-4 pt-1 rounded-md">
       <div
         onClick={() => setIsOpen((isOpen) => !isOpen)}
         className={clsx(
-          "text-xl mt-2 pb-2 -mx-4 px-4 flex gap-4 cursor-pointer",
+          "text-xl p-2 -mx-4 px-4 gap-4 cursor-pointer flex items-center",
           {
             "border-b-2": isOpen,
           }
         )}
       >
         <div className="font-bold">{index + 1}</div>
-        <div className="grow">{question.title}</div>
+        <div className="grow">
+          {question.title || (
+            <span className="opacity-50 text-base italic">Untitled</span>
+          )}
+        </div>
         <button onClick={onDelete}>
           <MdClose color="red" />
         </button>

@@ -54,7 +54,7 @@ export default function MasterIndex() {
           Quizzes
         </h1>
         <Link to="/master/new">
-          <Button className="absolute right-0 inset-y-0 bg-c ">
+          <Button className="absolute right-0 inset-y-0 bg-d ">
             <FaPlus />
             New Quiz
           </Button>

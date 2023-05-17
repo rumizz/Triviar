@@ -64,13 +64,12 @@ const QuizForm: FC<{ isNew?: boolean }> = ({ isNew }) => {
         <div className="grow font-bold text-3xl text-left w-full">
           Quiz editor
         </div>
-        <div className="italic">{status !== "unsaved" && status}</div>
         <Button onClick={save}>
           <FaSave />
-          Save
+          {status !== "unsaved" ? "Save" : "Saved"}
         </Button>
       </div>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 bg-white shadow-md p-4 rounded-md">
         <div className="flex-1">
           <Editor label="Title" {...editorFactory<string>(quiz, "title")} />
         </div>
@@ -79,12 +78,12 @@ const QuizForm: FC<{ isNew?: boolean }> = ({ isNew }) => {
           <Editor<number>
             type="number"
             label="Default time for question (seconds)"
-            {...editorFactory<number>(quiz, "defaultScore")}
+            {...editorFactory<number>(quiz, "defaultTime")}
           />
           <Editor<number>
             type="number"
             label="Default score for question"
-            {...editorFactory<number>(quiz, "defaultTime")}
+            {...editorFactory<number>(quiz, "defaultScore")}
           />
         </div>
       </div>
