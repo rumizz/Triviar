@@ -2,15 +2,15 @@ import { Phase } from "src/server/types/Phase";
 import GameStateContextProvider from "../util/GameStateContext";
 import PhaseRouter, { PhaseRoute } from "../util/PhaseRouter";
 import QuestionPage from "./common/Question";
-import ScoresPage from "./common/Scores";
 import WatchLobbyPage from "./watch/WatchLobby";
 import NextButton from "../component/NextButton";
 import { proxyClient } from "../util/proxyClient";
 import Footer from "./watch/Footer";
 import ToolContainer from "../component/ToolContainer";
 import { FaArrowRight, FaStop } from "react-icons/fa";
+import ScoresPage from "./common/Scores";
 
-export default function Watch() {
+export default function WatchRouter() {
   return (
     <GameStateContextProvider>
       <div className="flex flex-col absolute inset-0">

@@ -29,7 +29,6 @@ function createQuery<T>(method: (ctx: Context, input: T) => void) {
 
 function createSubscription(method: (ctx: Context, input: string) => void) {
   return async ({ input, ctx }: { input: string; ctx: Context }) => {
-    console.log("subscription open", input);
     const token = input;
     const userId = await getUserIdFromToken(token);
     const game = connections[userId];

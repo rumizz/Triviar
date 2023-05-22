@@ -19,6 +19,7 @@ export class Player {
       answer: undefined,
       isCorrect: undefined,
       time: 0,
+      rank: 0,
     });
   }
 }
@@ -29,6 +30,7 @@ export type PlayerState = {
   answer?: AnswerSymbol;
   isCorrect?: boolean;
   time: number;
+  rank: number;
 };
 
 export type PublicPlayerData = {

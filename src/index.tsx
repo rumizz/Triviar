@@ -3,10 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Page404 from "./client/page/404";
 import Index from "./client/page/Index";
-import Player from "./client/page/Player";
-import Watch from "./client/page/Watch";
 import MasterIndex from "./client/page/master/Index";
-import PlayerIndex from "./client/page/player/Index";
 import reportWebVitals from "./client/reportWebVitals";
 import GameConnectionContextProvider from "./client/util/GameConnectionContext";
 import "./client/index.css";
@@ -14,6 +11,9 @@ import PlayerStateContextProvider from "./client/util/PlayerStateContext";
 import QuizForm from "./client/page/master/QuizForm";
 import LoginContextProvider from "./client/util/LoginContext";
 import RegisterPage from "./client/page/Register";
+import PlayerRouter from "./client/page/PlayerRouter";
+import PlayerIndex from "./client/page/player/Index";
+import WatchRouter from "./client/page/WatchRouter";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -30,7 +30,7 @@ root.render(
             element={
               <GameConnectionContextProvider>
                 <PlayerStateContextProvider>
-                  <Player />
+                  <PlayerRouter />
                 </PlayerStateContextProvider>
               </GameConnectionContextProvider>
             }
@@ -48,7 +48,7 @@ root.render(
                     path="/:gameId/*"
                     element={
                       <GameConnectionContextProvider>
-                        <Watch />
+                        <WatchRouter />
                       </GameConnectionContextProvider>
                     }
                   />

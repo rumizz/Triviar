@@ -38,7 +38,10 @@ export default function WatchLobbyPage() {
           {Object.values(players)
             .filter((player) => player.name)
             .map((player) => (
-              <div className="bg-white rounded-full opacity-80 w-fit py-2 px-6">
+              <div
+                key={player.id}
+                className="bg-white rounded-full opacity-80 w-fit py-2 px-6"
+              >
                 {player.name}
               </div>
             ))}

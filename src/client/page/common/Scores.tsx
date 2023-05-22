@@ -1,31 +1,40 @@
 import { useContext } from "react";
 import { GameStateContext } from "../../util/GameStateContext";
+import { PlayerStateContext } from "src/client/util/PlayerStateContext";
+import clsx from "clsx";
 
 export default function ScoresPage({ view }: ScoresPageProps) {
   const { players } = useContext(GameStateContext);
 
+  const { rank } = useContext(PlayerStateContext);
+
   return (
     <div className="absolute inset-0 flex flex-col bg-a">
-      <h1 className="text-center text-3xl font-bold my-8 text-white drop-shadow-md">
+      <h1 className="text-center text-3xl font-bold mt-20 mb-8 md:my-8 text-white drop-shadow-md">
         Scores
       </h1>
-      <div className="flex flex-col px-8 justify-center items-stretch gap-6">
+
+      <div className="flex flex-col px-4 md:px-8 justify-center items-stretch gap-6 text-xl md:text-2xl font-bold">
         {Object.values(players)
           .sort((a, b) => (a.score > b.score ? -1 : 1))
-          .map(({ name, score }, index) => (
-            <div className="flex flex-row">
-              <div className="flex flex-row items-center gap-6 w-full">
-                <div className="text-white font-bold drop-shadow-md text-3xl">
-                  {index + 1}.
-                </div>
-                <div className="flagparent">
-                  <div className="flag bg-white py-4 px-8 text-center font-bold text-3xl">
-                    {name}
-                  </div>
-                </div>
-              </div>
-              <div className="flagparent  ">
-                <div className="flag bg-white py-4 px-8 text-center font-bold text-3xl flex flex-row">
+          .filter((_, index) =>
+            view === "player"
+              ? index >= rank - 1 && index <= rank + 1
+              : index < 5
+          )
+          .map(({ id, name, score }, index) => (
+            <div key={id} className="flagparent">
+              <div
+                className={clsx(
+                  "flag bg-white text-black flex flex-row px-8 py-4 gap-4",
+                  {
+                    "bg-gray-400": view === "player" && index !== rank,
+                  }
+                )}
+              >
+                <div className="drop-shadow-md">{index + 1}.</div>
+                <div className="overflow-hidden grow">{name}</div>
+                <div className="text-center font-bold flex flex-row">
                   {score}
                 </div>
               </div>

@@ -16,7 +16,7 @@ import Button from "../component/Button";
 import { MdLogout } from "react-icons/md";
 import ToolContainer from "../component/ToolContainer";
 
-export default function Player() {
+export default function PlayerRouter() {
   const { name } = useContext(PlayerStateContext);
   const { leave } = useContext(GameConnectionContext);
 

@@ -1,5 +1,4 @@
 import { initTRPC } from "@trpc/server";
-import { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { connections } from "../service/Game";
 import {
   createAnonymousToken,
@@ -23,13 +22,11 @@ export async function createContext({
     res.header("www-authenticate", token);
     userId = await getUserIdFromToken(token);
   } else {
-    console.log("context token", token);
     try {
       userId = await getUserIdFromToken(token);
     } catch (e) {
       throw new Error(UNAUTHORIZED);
     }
-    console.log("context userId", userId);
   }
   return {
     user: { id: userId },

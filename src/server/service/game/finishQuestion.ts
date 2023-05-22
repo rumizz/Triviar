@@ -8,6 +8,8 @@ export default function finishQuestion({ game }: Context) {
 
   game.timeout && clearTimeout(game.timeout);
 
+  const scores: number[] = [];
+
   Object.values(game.players).forEach((player) => {
     let answer = player.state.get().answer;
     if (answer) {
@@ -20,15 +22,25 @@ export default function finishQuestion({ game }: Context) {
       const score = game.state.get().score;
       const isLate = playerTimestamp > expiryTimestamp;
 
-      const newScore =
+      let newScore =
         player.state.get().score +
         (isCorrect && !isLate
           ? score / 2 +
             (score * ((expiryTimestamp - playerTimestamp) / duration)) / 2
           : 0);
-      player.state.set({ isCorrect, score: parseInt(newScore.toFixed(0)) });
+      newScore = parseInt(newScore.toFixed(0));
+      scores.push(newScore);
+      player.state.set({ isCorrect, score: newScore });
     }
   });
+
+  Object.values(game.players).forEach((player) => {
+    const rank = scores.findIndex((s) => s === player.state.get().score);
+    player.state.set({
+      rank,
+    });
+  });
+
   game.state.set({
     phase: Phase.answer,
     answerCorrects: {
