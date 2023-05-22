@@ -14,7 +14,6 @@ export const errorLink: TRPCLink<AppRouter> = () => {
           // @ts-ignore
           if (value.result?.data?.error === GAME_NOT_FOUND) {
             console.warn("game not found");
-            alert("The game does not exist or has been deleted");
             window.location.replace("/");
           }
           observer.next(value);

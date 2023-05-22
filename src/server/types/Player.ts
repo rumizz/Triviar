@@ -18,6 +18,7 @@ export class Player {
       score: 0,
       answer: undefined,
       isCorrect: undefined,
+      time: 0,
     });
   }
 }
@@ -27,6 +28,7 @@ export type PlayerState = {
   score: number;
   answer?: AnswerSymbol;
   isCorrect?: boolean;
+  time: number;
 };
 
 export type PublicPlayerData = {

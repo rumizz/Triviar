@@ -10,8 +10,8 @@ export function answer({ game, user }: Context, answerString: string) {
   }
   const player = findPlayer(game, user.id);
   let prevAnswer = player.state.get().answer;
-
-  player.state.set({ answer });
+  const time = Date.now();
+  player.state.set({ answer, time });
   console.log("answer", user.id, player.state.get().answer);
 
   if (!prevAnswer) {

@@ -42,6 +42,7 @@ export function nextQuestion({ game, user }: Context) {
     score: question.score,
     answeredCount: 0,
     expiryTimestamp,
+    duration: question.time * 1000,
     answerTexts: {
       a: question.options[0].text,
       b: question.options[1].text,

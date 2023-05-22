@@ -30,6 +30,7 @@ export class Game {
     joinCode: 0,
     questionIndex: -1,
     totalQuestions: 0,
+    duration: 0,
   });
   players: Player[] = [];
   answerOptions: { [id in AnswerSymbol]: AnswerOption } = {
@@ -67,6 +68,7 @@ export type GameState = {
   answerCorrects: { [id in AnswerSymbol]: boolean };
   answeredCount: number;
   expiryTimestamp: number;
+  duration: number;
   players: PublicPlayerData[];
   questionIndex: number;
   totalQuestions: number;

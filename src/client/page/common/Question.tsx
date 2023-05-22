@@ -6,7 +6,7 @@ import { AnswerSymbol } from "src/server/types/AnswerOption";
 import { usePlayerStore } from "src/client/store/playerStore";
 import { useTimer } from "react-timer-hook";
 import { Phase } from "src/server/types/Phase";
-import { FaClock, FaStopwatch, FaUser } from "react-icons/fa";
+import { FaStopwatch, FaUser } from "react-icons/fa";
 
 export default function QuestionPage({ view }: QuestionPageProps) {
   const {
@@ -20,7 +20,7 @@ export default function QuestionPage({ view }: QuestionPageProps) {
   } = useContext(GameStateContext);
 
   const { myAnswer, setMyAnswer } = usePlayerStore();
-  const { seconds, minutes, restart, isRunning } = useTimer({
+  const { seconds, minutes, restart } = useTimer({
     expiryTimestamp: new Date(expiryTimestamp),
   });
 

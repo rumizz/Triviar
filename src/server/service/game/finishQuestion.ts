@@ -13,9 +13,20 @@ export default function finishQuestion({ game }: Context) {
     if (answer) {
       let isCorrect = answerOptions[answer].correct;
       console.log("finishQuestion", player.id, answer, isCorrect);
+
+      const expiryTimestamp = game.state.get().expiryTimestamp;
+      const playerTimestamp = player.state.get().time;
+      const duration = game.state.get().duration;
+      const score = game.state.get().score;
+      const isLate = playerTimestamp > expiryTimestamp;
+
       const newScore =
-        player.state.get().score + (isCorrect ? game.state.get().score : 0);
-      player.state.set({ isCorrect, score: newScore });
+        player.state.get().score +
+        (isCorrect && !isLate
+          ? score / 2 +
+            (score * ((expiryTimestamp - playerTimestamp) / duration)) / 2
+          : 0);
+      player.state.set({ isCorrect, score: parseInt(newScore.toFixed(0)) });
     }
   });
   game.state.set({
