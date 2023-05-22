@@ -1,1 +1,2 @@
 export const UNAUTHORIZED = "UNAUTHORIZED";
+export const GAME_NOT_FOUND = "GAME_NOT_FOUND";

@@ -13,12 +13,13 @@ import finishQuestion from "../service/game/finishQuestion";
 import { connections } from "../service/Game";
 import { TRPCError } from "@trpc/server";
 import { getUserIdFromToken } from "../service/auth/token";
+import { GAME_NOT_FOUND } from "../types/ErrorCodes";
 
 function createQuery<T>(method: (ctx: Context, input: T) => void) {
   return ({ input, ctx }: { input: T; ctx: Context }) => {
     if (!ctx.game) {
       return {
-        error: "Game not found",
+        error: GAME_NOT_FOUND,
       };
     } else {
       method(ctx, input);

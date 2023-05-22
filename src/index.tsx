@@ -20,45 +20,47 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/game" element={<PlayerIndex />} />
-        <Route
-          path="/game/:gameId/*"
-          element={
-            <GameConnectionContextProvider>
-              <PlayerStateContextProvider>
-                <Player />
-              </PlayerStateContextProvider>
-            </GameConnectionContextProvider>
-          }
-        />
-        <Route
-          path="/master/*"
-          element={
-            <LoginContextProvider>
-              <Routes>
-                <Route path="/" element={<MasterIndex />} />
-                <Route path="/new" element={<QuizForm isNew />} />
-                <Route path="/edit/:quizId" element={<QuizForm />} />
+    <LoginContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/game" element={<PlayerIndex />} />
+          <Route
+            path="/game/:gameId/*"
+            element={
+              <GameConnectionContextProvider>
+                <PlayerStateContextProvider>
+                  <Player />
+                </PlayerStateContextProvider>
+              </GameConnectionContextProvider>
+            }
+          />
+          <Route
+            path="/master/*"
+            element={
+              <LoginContextProvider requireLogin>
+                <Routes>
+                  <Route path="/" element={<MasterIndex />} />
+                  <Route path="/new" element={<QuizForm isNew />} />
+                  <Route path="/edit/:quizId" element={<QuizForm />} />
 
-                <Route
-                  path="/:gameId/*"
-                  element={
-                    <GameConnectionContextProvider>
-                      <Watch />
-                    </GameConnectionContextProvider>
-                  }
-                />
-              </Routes>
-            </LoginContextProvider>
-          }
-        />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="*" element={<Page404 />} />
-      </Routes>
-    </BrowserRouter>
+                  <Route
+                    path="/:gameId/*"
+                    element={
+                      <GameConnectionContextProvider>
+                        <Watch />
+                      </GameConnectionContextProvider>
+                    }
+                  />
+                </Routes>
+              </LoginContextProvider>
+            }
+          />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </BrowserRouter>
+    </LoginContextProvider>
   </React.StrictMode>
 );
 

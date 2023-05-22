@@ -3,11 +3,9 @@ import { v4 as uuid } from "uuid";
 
 export const getUserIdFromToken = (token: string): Promise<string> => {
   if (!process.env.JWT_SECRET) throw new Error("JWT_SECRET not set");
-  // sanitize
-  console.log("token", token);
   return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET!!, (err, decoded: any) => {
-      console.log("decoded", decoded);
+      if (err) return reject(err);
       return resolve(decoded?.data as string);
     });
   });

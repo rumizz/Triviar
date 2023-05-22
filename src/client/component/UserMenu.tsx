@@ -18,9 +18,8 @@ const UserMenu: FC = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div ref={ref}>
       <div
-        ref={ref}
         onClick={() => setIsOpen((prev) => !prev)}
         className="cursor-pointer flex flex-row items-center gap-2 text-white border-2 border-white rounded-md px-4 py-2"
       >
@@ -38,7 +37,7 @@ const UserMenu: FC = () => {
           Log out
         </Button>
       )}
-    </>
+    </div>
   );
 };
 

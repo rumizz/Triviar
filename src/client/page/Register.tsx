@@ -48,9 +48,12 @@ const RegisterPage: FC = () => {
           <div className="flex flex-col gap-2">
             <label htmlFor="username">Username</label>
             <input
-              {...register("username", { required: true })}
+              {...register("username", { required: true, minLength: 3 })}
               className="border border-gray-300 rounded-lg py-2 px-4"
             />
+            <span className="text-sm opacity-50">
+              Must be between 3 and 20 characters
+            </span>
             <div className="text-red-500">
               {errors && errors.username?.message}
             </div>
@@ -62,6 +65,9 @@ const RegisterPage: FC = () => {
               {...register("password", { required: true })}
               className="border border-gray-300 rounded-lg py-2 px-4"
             />
+            <span className="text-sm opacity-50">
+              Preferably not your birth date
+            </span>
           </div>
           <Button type="submit" className="justify-center bg-d">
             Register
