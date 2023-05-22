@@ -32,7 +32,7 @@ const UserMenu: FC = () => {
             logout();
             navigate("/", { replace: true });
           }}
-          className="w-full bg-white mt-2 !text-black justify-center"
+          className="w-full bg-white border-2 border-black mt-2 !text-black justify-center"
         >
           Log out
         </Button>

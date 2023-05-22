@@ -7,6 +7,8 @@ import { quizRouter } from "./quiz-router";
 import { db } from "../service/db/db";
 import { Quiz } from "../types/Quiz";
 import { authRouter } from "./auth-router";
+import { runningGames } from "../service/Game";
+import { GameProgress } from "../types/GameProgress";
 
 export const router = client.router({
   createGame: client.procedure
@@ -26,6 +28,19 @@ export const router = client.router({
 
   join: client.procedure.input(z.number()).query(({ input, ctx }) => {
     return join(ctx, input);
+  }),
+
+  getOwnGames: client.procedure.query(({ ctx }) => {
+    const games: GameProgress[] = runningGames
+      .filter((game) => game.quiz.ownerId === ctx.user.id)
+      .map((game) => ({
+        id: game.id,
+        title: game.quiz.title,
+        questionIndex: game.state.get().questionIndex,
+        totalQuestions: game.state.get().totalQuestions,
+        playerCount: game.players.length,
+      }));
+    return games;
   }),
 
   game: gameRouter,

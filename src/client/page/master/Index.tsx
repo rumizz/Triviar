@@ -7,19 +7,24 @@ import { proxyClient } from "src/client/util/proxyClient";
 import { Quiz } from "src/server/types/Quiz";
 import QuizCard from "./QuizCard";
 import UserMenu from "src/client/component/UserMenu";
+import GameCard from "./GameCard";
+import { GameProgress } from "src/server/types/GameProgress";
 
 export default function MasterIndex() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
-  //const [games, setGames] = useState<Game[]>([]);
+  const [games, setGames] = useState<GameProgress[]>([]);
 
   const reload = () => {
-    proxyClient.quiz.getAll.query().then((quizzes) => {
+    async function reload() {
+      const quizzes = await proxyClient.quiz.getAll.query();
       setQuizzes(quizzes);
-      setIsLoading(false);
-    });
+      const games = await proxyClient.getOwnGames.query();
+      setGames(games);
+    }
+    reload().then(() => setIsLoading(false));
   };
 
   useEffect(reload, []);
@@ -48,7 +53,12 @@ export default function MasterIndex() {
           <UserMenu />
         </div>
       </div>
-      <p className="text-white opacity-70">No running games</p>
+      {games.map((game) => (
+        <GameCard key={game.id} game={game} />
+      ))}
+      {games.length === 0 && (
+        <p className="text-white opacity-70">No running games</p>
+      )}
       <div className="relative">
         <h1 className="text-white font-bold text-3xl text-left w-full">
           Quizzes
