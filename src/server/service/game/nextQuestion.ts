@@ -28,7 +28,8 @@ export function nextQuestion({ game, user }: Context) {
     c: question.options[2],
     d: question.options[3],
   };
-  let expiryTimestamp = Date.now() + question.time;
+  let expiryTimestamp = Date.now() + question.time * 1000;
+
   game.timeout = setTimeout(
     () => finishQuestion({ game, user }),
     question.time * 1000 + 1000

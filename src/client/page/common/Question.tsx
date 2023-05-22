@@ -1,12 +1,12 @@
 import { GameStateContext } from "../../util/GameStateContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AnswerButton from "../../component/AnswerButton";
 import { proxyClient } from "../../util/proxyClient";
 import { AnswerSymbol } from "src/server/types/AnswerOption";
 import { usePlayerStore } from "src/client/store/playerStore";
 import { useTimer } from "react-timer-hook";
-import { useEffect } from "react";
 import { Phase } from "src/server/types/Phase";
+import { FaClock, FaStopwatch, FaUser } from "react-icons/fa";
 
 export default function QuestionPage({ view }: QuestionPageProps) {
   const {
@@ -20,12 +20,13 @@ export default function QuestionPage({ view }: QuestionPageProps) {
   } = useContext(GameStateContext);
 
   const { myAnswer, setMyAnswer } = usePlayerStore();
-  const { seconds, minutes, restart } = useTimer({
+  const { seconds, minutes, restart, isRunning } = useTimer({
     expiryTimestamp: new Date(expiryTimestamp),
   });
 
   useEffect(() => {
     restart(new Date(expiryTimestamp));
+    console.log("restart timer", new Date(expiryTimestamp));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expiryTimestamp]);
 
@@ -56,15 +57,17 @@ export default function QuestionPage({ view }: QuestionPageProps) {
 
         {view === "watch" && (
           <div className="absolute bottom-0 inset-x-0 flex flex-row p-4 text-black">
-            <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">
+            <p className="drop-shadow-md bg-white text-2xl font-bold px-4 py-2 rounded-md flex items-center gap-4">
+              <FaStopwatch />
               {phase === Phase.question
                 ? `${minutes * 60 + seconds}s`
                 : "Time's up!"}
             </p>
             <span className="grow" />
-            <p className="drop-shadow-md bg-white text-2xl font-bold px-6 py-2 rounded-md">{`${answeredCount} / ${
-              Object.values(players).length
-            }`}</p>
+            <p className="drop-shadow-md bg-white text-2xl font-bold px-4 py-2 rounded-md flex gap-4 items-center">
+              <FaUser />
+              {`${answeredCount} / ${Object.values(players).length}`}
+            </p>
           </div>
         )}
       </div>
