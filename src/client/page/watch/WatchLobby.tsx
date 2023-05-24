@@ -19,9 +19,9 @@ export default function WatchLobbyPage() {
           <div className="grow bg-white p-4 rounded-md">Join with code</div>
           <div className="bg-white p-4 rounded-md">{joinCode}</div>
         </div>
-        <div className="bg-white rounded-md w-full grow p-6 flex flex-col items-stretch gap-6">
+        <div className="bg-white rounded-md w-full grow p-6 flex flex-col items-stretch gap-6 mb-16">
           <p>Or scan QR</p>
-          <QRCode value={url} className="w-full h-full max-h-80" />
+          <QRCode value={url} className="grow w-full max-h-80" />
         </div>
       </div>
       <div className="w-1/2 h-full flex flex-col p-8 gap-8">
@@ -29,7 +29,10 @@ export default function WatchLobbyPage() {
           <p className="font-bold text-3xl drop-shadow-md text-white opacity-80 grow">
             Joined - {players.length}
           </p>
-          <NextButton onClick={() => proxyClient.game.nextQuestion.query()}>
+          <NextButton
+            disabled={players.length === 0}
+            onClick={() => proxyClient.game.nextQuestion.query()}
+          >
             <FaPlay />
             Start
           </NextButton>
@@ -45,6 +48,11 @@ export default function WatchLobbyPage() {
                 {player.name}
               </div>
             ))}
+          {players.length === 0 && (
+            <p className="text-white opacity-80">
+              Waiting for players to join...
+            </p>
+          )}
         </div>
       </div>
     </div>

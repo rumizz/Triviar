@@ -60,8 +60,8 @@ export default function WatchRouter() {
               </ToolContainer>
             </>
           </PhaseRoute>
-          <PhaseRoute value={Phase.podium}>
-            <div>podium</div>
+          <PhaseRoute value={Phase.end}>
+            <ScoresPage view="watch" isEnded />
           </PhaseRoute>
         </PhaseRouter>
         <div className="h-12" />

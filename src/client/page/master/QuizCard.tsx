@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Quiz } from "src/server/types/Quiz";
 import { FaEdit, FaPlay } from "react-icons/fa";
-import Button from "src/client/component/Button";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { MdClear } from "react-icons/md";
+import Button from "src/client/component/Button";
+import { Quiz } from "src/server/types/Quiz";
 
 const QuizCard: FC<{
   quiz: Quiz;
@@ -27,7 +27,7 @@ const QuizCard: FC<{
           onClick={onDelete}
           className="bg-red-500 rounded-md text-white font-bold"
         >
-          <MdClear />
+          <MdDelete />
           Delete
         </Button>
         <div className="grow"></div>

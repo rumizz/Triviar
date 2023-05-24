@@ -41,47 +41,58 @@ export default function MasterIndex() {
       proxyClient.quiz.delete.query(quizId).then(reload);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading className="bg-b text-white" />;
 
   return (
-    <main className="absolute inset-0 flex p-8 flex-col items-stretch gap-4 bg-b overflow-y-auto">
-      <div className="relative">
-        <h1 className="text-white font-bold text-3xl text-left w-full">
-          Games
-        </h1>
-        <div className="absolute right-0 inset-y-0 z-20">
-          <UserMenu />
+    <main className="absolute inset-0 flex p-8 flex-col items-stretch gap-6 bg-b overflow-y-auto">
+      <div className="absolute right-8 top-7 z-20">
+        <UserMenu />
+      </div>
+      <div className="text-white font-bold text-3xl drop-shadow-md sm:text-center">
+        Dashboard
+      </div>
+      <div className="flex flex-col gap-4 lg:flex-row">
+        <div className="flex-1 flex flex-col gap-4">
+          <div className="relative">
+            <h1 className="text-white font-bold text-3xl drop-shadow-md text-left w-full">
+              Games
+            </h1>
+          </div>
+          {games.map((game) => (
+            <GameCard key={game.id} game={game} />
+          ))}
+          {games.length === 0 && (
+            <p className="text-white opacity-70">
+              No running games (create one from a quiz)
+            </p>
+          )}
+        </div>
+        <div className="flex-1 flex flex-col gap-4">
+          <div className="relative">
+            <h1 className="text-white font-bold text-3xl text-left drop-shadow-md w-full">
+              Quizzes
+            </h1>
+            <Link to="/master/new">
+              <Button className="absolute right-0 inset-y-0 bg-d ">
+                <FaPlus />
+                New Quiz
+              </Button>
+            </Link>
+          </div>
+          {quizzes.map((quiz) => (
+            <QuizCard
+              key={quiz.id}
+              onStart={() => startGame(quiz.id)}
+              onDelete={() => deleteQuiz(quiz.id)}
+              quiz={quiz}
+            />
+          ))}
+
+          {quizzes.length === 0 && (
+            <p className="text-white opacity-70">No quizzes</p>
+          )}
         </div>
       </div>
-      {games.map((game) => (
-        <GameCard key={game.id} game={game} />
-      ))}
-      {games.length === 0 && (
-        <p className="text-white opacity-70">No running games</p>
-      )}
-      <div className="relative">
-        <h1 className="text-white font-bold text-3xl text-left w-full">
-          Quizzes
-        </h1>
-        <Link to="/master/new">
-          <Button className="absolute right-0 inset-y-0 bg-d ">
-            <FaPlus />
-            New Quiz
-          </Button>
-        </Link>
-      </div>
-      {quizzes.map((quiz) => (
-        <QuizCard
-          key={quiz.id}
-          onStart={() => startGame(quiz.id)}
-          onDelete={() => deleteQuiz(quiz.id)}
-          quiz={quiz}
-        />
-      ))}
-
-      {quizzes.length === 0 && (
-        <p className="text-white opacity-70">No quizzes</p>
-      )}
     </main>
   );
 }

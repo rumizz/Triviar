@@ -4,4 +4,5 @@ export type GameProgress = {
   questionIndex: number;
   totalQuestions: number;
   playerCount: number;
+  createdAt: string;
 };

@@ -15,6 +15,7 @@ import Button from "../component/Button";
 
 import { MdLogout } from "react-icons/md";
 import ToolContainer from "../component/ToolContainer";
+import PlayerFinalPage from "./player/PlayerFinalPage";
 
 export default function PlayerRouter() {
   const { name } = useContext(PlayerStateContext);
@@ -40,8 +41,8 @@ export default function PlayerRouter() {
           <PhaseRoute value={Phase.scores}>
             <ScoresPage view="player" />
           </PhaseRoute>
-          <PhaseRoute value={Phase.podium}>
-            <div>podium</div>
+          <PhaseRoute value={Phase.end}>
+            <PlayerFinalPage />
           </PhaseRoute>
         </PhaseRouter>
         <ToolContainer>

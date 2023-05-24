@@ -3,15 +3,19 @@ import { GameStateContext } from "../../util/GameStateContext";
 import { PlayerStateContext } from "src/client/util/PlayerStateContext";
 import clsx from "clsx";
 
-export default function ScoresPage({ view }: ScoresPageProps) {
+export default function ScoresPage({ view, isEnded }: ScoresPageProps) {
   const { players } = useContext(GameStateContext);
 
   const { rank } = useContext(PlayerStateContext);
 
   return (
-    <div className="absolute inset-0 flex flex-col bg-a">
+    <div
+      className={clsx("absolute inset-0 flex flex-col bg-a", {
+        "bg-d": isEnded,
+      })}
+    >
       <h1 className="text-center text-3xl font-bold mt-20 mb-8 md:my-8 text-white drop-shadow-md">
-        Scores
+        {isEnded ? "Final results" : "Scores"}
       </h1>
 
       <div className="flex flex-col px-4 md:px-8 justify-center items-stretch gap-6 text-xl md:text-2xl font-bold">
@@ -47,4 +51,5 @@ export default function ScoresPage({ view }: ScoresPageProps) {
 
 export type ScoresPageProps = {
   view: "watch" | "player";
+  isEnded?: boolean;
 };

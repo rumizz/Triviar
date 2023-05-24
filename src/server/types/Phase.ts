@@ -3,7 +3,8 @@ export const Phase = {
   question: "question",
   answer: "answer",
   scores: "scores",
-  podium: "podium",
+  end: "end",
 };
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type Phase = (typeof Phase)[keyof typeof Phase];

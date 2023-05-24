@@ -39,6 +39,7 @@ export const router = client.router({
         questionIndex: game.state.get().questionIndex,
         totalQuestions: game.state.get().totalQuestions,
         playerCount: game.players.length,
+        createdAt: game.createdAt,
       }));
     return games;
   }),

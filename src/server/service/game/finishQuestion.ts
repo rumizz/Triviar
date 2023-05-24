@@ -8,12 +8,14 @@ export default function finishQuestion({ game }: Context) {
 
   game.timeout && clearTimeout(game.timeout);
 
-  const scores: number[] = [];
+  let scores: { score: number; id: string }[] = [];
 
   Object.values(game.players).forEach((player) => {
     let answer = player.state.get().answer;
+    let newScore = player.state.get().score;
+    let isCorrect: boolean | undefined = false;
     if (answer) {
-      let isCorrect = answerOptions[answer].correct;
+      isCorrect = answerOptions[answer].correct;
       console.log("finishQuestion", player.id, answer, isCorrect);
 
       const expiryTimestamp = game.state.get().expiryTimestamp;
@@ -22,20 +24,22 @@ export default function finishQuestion({ game }: Context) {
       const score = game.state.get().score;
       const isLate = playerTimestamp > expiryTimestamp;
 
-      let newScore =
-        player.state.get().score +
-        (isCorrect && !isLate
+      newScore +=
+        isCorrect && !isLate
           ? score / 2 +
             (score * ((expiryTimestamp - playerTimestamp) / duration)) / 2
-          : 0);
-      newScore = parseInt(newScore.toFixed(0));
-      scores.push(newScore);
-      player.state.set({ isCorrect, score: newScore });
+          : 0;
     }
+
+    newScore = parseInt(newScore.toFixed(0));
+    scores.push({ score: newScore, id: player.id });
+    player.state.set({ isCorrect, score: newScore });
   });
 
+  scores = scores.sort((a, b) => b.score - a.score);
+
   Object.values(game.players).forEach((player) => {
-    const rank = scores.findIndex((s) => s === player.state.get().score);
+    const rank = scores.findIndex(({ id }) => id === player.id);
     player.state.set({
       rank,
     });

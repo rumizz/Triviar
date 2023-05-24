@@ -14,7 +14,7 @@ export default function PhaseRouter({ children }: PhaseRouterProps) {
     return routes;
   }, [children]);
 
-  if (!phase) return <Loading />;
+  if (!phase) return <Loading className="bg-b" />;
 
   return routes.get(phase) || <>Invalid state</>;
 }

@@ -49,6 +49,7 @@ export class Game {
     },
   };
   timeout?: NodeJS.Timeout;
+  createdAt: string;
   constructor(quiz: Quiz) {
     this.id = uuid();
     this.quiz = quiz;
@@ -56,6 +57,7 @@ export class Game {
       joinCode: Math.floor(Math.random() * 900000) + 100000,
       totalQuestions: quiz.questions.length,
     });
+    this.createdAt = new Date().toISOString();
   }
 }
 
