@@ -12,12 +12,14 @@ export default function WatchLobbyPage() {
 
   const url = new URL(`game/${id}`, window.location.origin).toString();
 
+  const joinedAndnNamedPlayerCount = players.filter((p) => p.name).length;
+
   return (
     <div className="flex flex-row bg-b absolute inset-0">
       <div className="w-1/2 flex flex-col p-8 gap-8 font-bold text-3xl h-full">
-        <div className="flex flex-row gap-8 items-center">
-          <div className="grow bg-white p-4 rounded-md">Join with code</div>
-          <div className="bg-white p-4 rounded-md">{joinCode}</div>
+        <div className="flex p-4 bg-white rounded-md flex-row flex-wrap gap-4 items-start">
+          <div className="grow">Join with code</div>
+          <div>{joinCode}</div>
         </div>
         <div className="bg-white rounded-md w-full grow p-6 flex flex-col items-stretch gap-6 mb-16">
           <p>Or scan QR</p>
@@ -27,10 +29,10 @@ export default function WatchLobbyPage() {
       <div className="w-1/2 h-full flex flex-col p-8 gap-8">
         <div className="flex flex-row">
           <p className="font-bold text-3xl drop-shadow-md text-white opacity-80 grow">
-            Joined - {players.length}
+            Joined - {joinedAndnNamedPlayerCount}
           </p>
           <NextButton
-            disabled={players.length === 0}
+            disabled={joinedAndnNamedPlayerCount === 0}
             onClick={() => proxyClient.game.nextQuestion.query()}
           >
             <FaPlay />

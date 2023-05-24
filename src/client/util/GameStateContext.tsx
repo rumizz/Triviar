@@ -26,6 +26,12 @@ export default function GameStateContextProvider({
   }, [state.phase, clear]);
 
   useEffect(() => {
+    if (state.isDeleted) {
+      leave();
+    }
+  }, [state.isDeleted, leave]);
+
+  useEffect(() => {
     const subscription = proxyClient.game.state.subscribe(token, {
       onStarted() {
         console.log("connected");

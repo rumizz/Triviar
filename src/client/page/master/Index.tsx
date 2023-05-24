@@ -41,6 +41,11 @@ export default function MasterIndex() {
       proxyClient.quiz.delete.query(quizId).then(reload);
   };
 
+  const deleteGame = (gameId: string) => {
+    if (window.confirm("Are you sure you want to delete this game?"))
+      proxyClient.deleteGame.query(gameId).then(reload);
+  };
+
   if (isLoading) return <Loading className="bg-b text-white" />;
 
   return (
@@ -59,7 +64,7 @@ export default function MasterIndex() {
             </h1>
           </div>
           {games.map((game) => (
-            <GameCard key={game.id} game={game} />
+            <GameCard key={game.id} game={game} onDelete={deleteGame} />
           ))}
           {games.length === 0 && (
             <p className="text-white opacity-70">

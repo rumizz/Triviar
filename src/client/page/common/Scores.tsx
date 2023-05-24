@@ -20,6 +20,7 @@ export default function ScoresPage({ view, isEnded }: ScoresPageProps) {
 
       <div className="flex flex-col px-4 md:px-8 justify-center items-stretch gap-6 text-xl md:text-2xl font-bold">
         {Object.values(players)
+          .filter((player) => player.name)
           .sort((a, b) => (a.score > b.score ? -1 : 1))
           .filter((_, index) =>
             view === "player"

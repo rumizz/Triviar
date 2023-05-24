@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 import Button from "src/client/component/Button";
 import { GameProgress } from "src/server/types/GameProgress";
 
-const GameCard: FC<{ game: GameProgress }> = ({ game }) => {
+const GameCard: FC<{ game: GameProgress; onDelete: (id: string) => void }> = ({
+  game,
+  onDelete,
+}) => {
   const isEnded = game.questionIndex + 1 === game.totalQuestions;
   let createdAtText;
-  // create a text thats something like "2 days ago"
+
   if (game.createdAt) {
     const createdAt = new Date(game.createdAt);
     const now = new Date();
@@ -46,7 +49,10 @@ const GameCard: FC<{ game: GameProgress }> = ({ game }) => {
         </div>
       </div>
       <div className="mt-4 flex flex-row items-end gap-2 flex-wrap">
-        <Button className="bg-red-500 rounded-md text-white font-bold">
+        <Button
+          onClick={() => onDelete(game.id)}
+          className="bg-red-500 rounded-md text-white font-bold"
+        >
           <MdDelete />
           Delete
         </Button>

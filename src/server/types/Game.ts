@@ -31,6 +31,7 @@ export class Game {
     questionIndex: -1,
     totalQuestions: 0,
     duration: 0,
+    isDeleted: false,
   });
   players: Player[] = [];
   answerOptions: { [id in AnswerSymbol]: AnswerOption } = {
@@ -74,4 +75,5 @@ export type GameState = {
   players: PublicPlayerData[];
   questionIndex: number;
   totalQuestions: number;
+  isDeleted?: boolean;
 };
