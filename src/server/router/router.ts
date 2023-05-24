@@ -59,7 +59,7 @@ export const router = client.router({
       if (index !== -1) {
         runningGames.splice(index, 1);
       }
-    });
+    }, 1000 * 5);
   }),
 
   game: gameRouter,
