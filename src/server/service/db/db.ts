@@ -6,7 +6,7 @@ async function main() {
 }
 main();
 
-const QuizSchema = new mongoose.Schema<Quiz>({
+const QuizModel = new mongoose.Schema<Quiz>({
   id: String,
   ownerId: String,
   title: String,
@@ -36,6 +36,6 @@ const UserModel = new mongoose.Schema({
 });
 
 export const db = {
-  QuizModel: mongoose.model("Quiz", QuizSchema),
+  QuizModel: mongoose.model("Quiz", QuizModel),
   UserModel: mongoose.model("User", UserModel),
 };
